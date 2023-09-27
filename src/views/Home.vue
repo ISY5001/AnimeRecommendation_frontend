@@ -6,6 +6,8 @@ import IsLoading from "../components/IsLoading.vue";
 import { useMoviesStore } from "../store/movies";
 const store = useMoviesStore();
 
+// define some reatcive variables using ref function, which used to 
+// store data that can trigger updates in teh component when their value change.
 const keyword = ref(
   localStorage.getItem("keyword")
     ? localStorage.getItem("keyword")
@@ -17,12 +19,15 @@ const favMovies = ref(
     ? JSON.parse(localStorage.getItem("favMovies"))
     : []
 );
-
+// the total number of pages for movie results based on the total number
+// of results
 let totalPage = 0;
 setTimeout(() => {
   totalPage = Math.ceil(store.totalResults / 10);
 }, 1000);
 
+// register a listener to the DOM, which can fetch more movies data
+// when user scroll to the bottem of page.
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
   store.getAllMovies(keyword.value);

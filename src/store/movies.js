@@ -5,6 +5,7 @@ const API_URL = "https://www.omdbapi.com/";
 const API_KEY = "f9bfc5b4";
 
 export const useMoviesStore = defineStore("movies", {
+  // state function defines the intial state of the movies store
   state: () => {
     return {
       movies: [],
@@ -15,6 +16,8 @@ export const useMoviesStore = defineStore("movies", {
       page: 1,
     };
   },
+  // actions object defines methods that can be used to interact with and modify
+  // the store's state
   actions: {
     async getAllMovies(keyword) {
       this.isLoading = true;

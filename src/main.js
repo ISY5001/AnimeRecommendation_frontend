@@ -1,10 +1,10 @@
 import { createApp } from "vue";
-import App from "./App.vue";
+import App from "./App.vue"; // root component for our applciation
 import router from "./router";
 import "./assets/css/index.css";
-import { createPinia } from "pinia";
+import { createPinia } from "pinia"; // state management of Vue.js applciation
 
-const app = createApp(App);
+const app = createApp(App); // creates a new Vue application instance
 app.use(router);
 app.use(createPinia());
-app.mount("#app");
+app.mount("#app"); // link our Vue application to index.html, <div id="app">

@@ -11,6 +11,24 @@ const routes = [
     },
   },
   {
+    path: "/register",
+    name: 'Register',
+    component: () => import("../views/Register.vue"),
+    meta: {
+      enterClass: "animate__animated animate__fadeInLeft",
+      leaveClass: "animate__animated animate__fadeOutLeft",
+    },
+  },
+  {
+    path: "/login",
+    name: 'Login',
+    component: () => import("../views/Login.vue"),
+    meta: {
+      enterClass: "animate__animated animate__fadeInLeft",
+      leaveClass: "animate__animated animate__fadeOutLeft",
+    },
+  },
+  {
     path: "/detail/:id",
     name: "Details",
     component: () => import("../views/Details.vue"),
