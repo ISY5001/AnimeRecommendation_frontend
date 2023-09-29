@@ -1,35 +1,112 @@
 <template>
-    <div>
-      <h1>Register</h1>
-      <form @submit.prevent="registerUser">
-        <div>
-          <label for="username">Username:</label>
-          <input type="text" id="username" v-model="username" required />
+  <div class="register">
+    <h1>Login</h1>
+    <form @submit.prevent="loginUser">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          v-model="username"
+          placeholder="Enter your username"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          v-model="password"
+          placeholder="Enter your password"
+          required
+        />
+      </div>
+      <div class="form-actions">
+          <button type="submit">Login</button>
         </div>
-        <div>
-          <label for="password">Password:</label>
-          <input type="password" id="password" v-model="password" required />
-        </div>
-        <div>
-          <button type="submit">Register</button>
-        </div>
-      </form>
-    </div>
-  </template>
+    </form>
+  </div>
+</template>
+
+<script setup>
+import { ref } from "@vue/runtime-core";
+import { useRouter } from "vue-router";
+import axios from "axios";
+
+const username = ref(localStorage.getItem("username") ?? "");
+const password = ref(localStorage.getItem("password") ?? "");
+const router = useRouter();
+
+const loginUser = async () => {
+  if (!username.value || !password.value) {
+    // Perform client-side validation of the form
+    // You can add more validation as needed
+    return;
+  }
+  try {
+    console.log("login")
+    // Send a POST request to your Flask backend for user registration
+    const response = await (async() => {
+      return axios.post(`${"http://127.0.0.1:8282"}/login`, {
+        username: username.value,
+        password: password.value,
+      });
+    })();
+    console.log(response.data.msg)
+    if (response.data.msg === "success") {
+      router.push("/");
+    } else {
+      console.error("Login failed:", response.data.error)
+    }
+  } catch (error) {
+    // Handle network errors or other exceptions here
+    console.error("Login failed:", error);
+  }
+};
+</script>
   
-  <script setup>
-  import { ref } from "@vue/runtime-core";
-  import { useRouter } from "vue-router";
-  
-  const username = ref("");
-  const password = ref("");
-  const router = useRouter();
-  
-  const registerUser = () => {
-    // Add your registration logic here, e.g., make an API request to register the user.
-  
-    // After a successful registration, you can redirect to another page.
-    router.push("/login");
-  };
-  </script>
-  
+<style scoped>
+.register {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+</style>
