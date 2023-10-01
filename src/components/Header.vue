@@ -14,15 +14,23 @@
             <span class="text-lg tracking-wide md:text-xl">Favorite Animes</span>
           </router-link>
         </li>
+        <li>
+          <router-link to="/recommend" class="flex text-red-600 items-center cursor-pointer">
+            <HeartIcon />
+            <span class="text-lg tracking-wide md:text-xl">Recommended Animes</span>
+          </router-link>
+        </li>
         <li class="relative">
           <!-- User icon -->
-          <div class="flex text-blue-600 items-center cursor-pointer" @mouseenter="showUserDropdown = true" @mouseleave="hideUserDropdown">
+          <div class="flex text-blue-600 items-center cursor-pointer" @mouseenter="showUserDropdown = true"
+            @mouseleave="hideUserDropdown">
             <StarIcon />
             <span class="text-lg tracking-wide md:text-xl">User</span>
           </div>
           <!-- Dropdown menu for User -->
           <transition name="fade">
-            <div v-if="showUserDropdown" class="absolute top-10 right-0 bg-white p-2 space-y-2 shadow-md rounded-lg" @mouseenter="cancelHideTimer" @mouseleave="startHideTimer">
+            <div v-if="showUserDropdown" class="absolute top-10 right-0 bg-white p-2 space-y-2 shadow-md rounded-lg"
+              @mouseenter="cancelHideTimer" @mouseleave="startHideTimer">
               <router-link to="/login" class="block">Login</router-link>
               <router-link to="/register" class="block">Register</router-link>
               <router-link to="/logout" class="block">Logout</router-link>
@@ -64,10 +72,13 @@ const cancelHideTimer = () => {
 </script>
 
 <style scoped>
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity 0.3s;
 }
-.fade-enter, .fade-leave-to {
+
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 </style>
@@ -76,7 +87,8 @@ const cancelHideTimer = () => {
 /* Style for the dropdown menu */
 ul li .absolute {
   display: none;
-  flex-direction: column; /* Display the items vertically */
+  flex-direction: column;
+  /* Display the items vertically */
   position: absolute;
   top: 100%;
   right: 0;

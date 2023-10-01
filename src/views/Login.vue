@@ -4,27 +4,15 @@
     <form @submit.prevent="loginUser">
       <div class="form-group">
         <label for="username">Username</label>
-        <input
-          type="text"
-          id="username"
-          v-model="username"
-          placeholder="Enter your username"
-          required
-        />
+        <input type="text" id="username" v-model="username" placeholder="Enter your username" required />
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          v-model="password"
-          placeholder="Enter your password"
-          required
-        />
+        <input type="password" id="password" v-model="password" placeholder="Enter your password" required />
       </div>
       <div class="form-actions">
-          <button type="submit">Login</button>
-        </div>
+        <button type="submit">Login</button>
+      </div>
     </form>
   </div>
 </template>
@@ -47,7 +35,7 @@ const loginUser = async () => {
   try {
     console.log("login")
     // Send a POST request to your Flask backend for user registration
-    const response = await (async() => {
+    const response = await (async () => {
       return axios.post(`${"http://127.0.0.1:8282"}/login`, {
         username: username.value,
         password: password.value,
@@ -55,6 +43,8 @@ const loginUser = async () => {
     })();
     console.log(response.data.msg)
     if (response.data.msg === "success") {
+      // Navigate to the /recommend route with the userId as a query parameter
+      router.push({ name: "Recommend", query: { uid: response.data.username } });
       router.push("/");
     } else {
       console.error("Login failed:", response.data.error)

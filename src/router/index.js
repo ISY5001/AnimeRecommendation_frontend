@@ -48,6 +48,16 @@ const routes = [
     },
   },
   {
+    path: "/recommend",
+    name: "Recommend",
+    component: () => import("../views/Recommend.vue"), // Create a Recommend.vue component
+    props: (route) => ({ uid: route.query.uid }), // Pass the user ID as a prop
+    meta: {
+      enterClass: "animate__animated animate__fadeInLeft",
+      leaveClass: "animate__animated animate__fadeOutLeft",
+    },
+  },
+  {
     path: "/:pathMatch(.*)*",
     name: "NotFound",
     component: () => import("../views/NotFound.vue"),
