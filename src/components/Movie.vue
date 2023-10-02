@@ -6,58 +6,57 @@ import HeartIcon from "./icons/HeartIcon.vue";
 //import { useFavoritStore } from "../store/favorit";
 import HeartRating from './HeartRating.vue';
 //const store = useFavoritStore();
-
+import { computed } from 'vue';
 import { useScoreStore } from "../store/score";
+
+
 const store = useScoreStore();
 
 const props = defineProps({
-  movie: "",
+  movie: Object,
 });
 
 const title = props.movie.Title.substr(0, 15) + "...";
 
 // This will hold the scores for each movie by ID.
-const scores = ref({}); 
+//const scores = ref({}); 
 
+// Use a computed property to get the score for the current movie from the store.
+const score = computed(() => {
+  const foundMovie = store.scoredMovies.find(movie => movie.imdbID === props.movie.imdbID);
+  return foundMovie ? foundMovie.Score : 0;
+});
 
 // Watch the scoredMovies array for changes and update the scores ref accordingly.
-watch(() => store.scoredMovies, (newVal) => {
+/*watch(() => store.scoredMovies, (newVal) => {
   newVal.forEach(movie => {
     scores.value[movie.imdbID] = movie.Score;
   });
-}, { deep: true });
+}, { deep: true });*/
 
 
-const toggleScore = (id, score) => {
+
+const toggleScore = (id, newScore) => {
   const foundMovie = store.scoredMovies.find((movie) => movie.imdbID == id);
   if (foundMovie) {
-    if (foundMovie.Score === score) {
-      // If the score is the same, remove the score
+    if (foundMovie.Score === newScore) {
       store.removeScore(id);
-      // Also remove the score from the foundMovie object
-      foundMovie.Score = 0;
     } else {
-      // If the score is different, update the score
-      store.updateScore(id, score);
-      // Also update the score in the foundMovie object
-      foundMovie.Score = score;
+      store.updateScore(id, newScore);
     }
   } else {
-    // If the movie is not scored, add the score
-    store.addScore(id, score);
-    // Also add the score to the foundMovie object
-    if (foundMovie) foundMovie.Score = score;
+    store.addScore(id, newScore);
   }
 };
 
-
+/*
 const isRat = (imdbID) => {
   if (store.scoredMovies) {
     const result = store.scoredMovies.filter((movie) => movie.imdbID == imdbID);
 
     return result.length ? true : false;
   }
-};
+};*/
 
 
 </script>
@@ -104,6 +103,6 @@ const isRat = (imdbID) => {
 
     </div>
   </div>
-  <HeartRating v-model="movie.score" @update:modelValue="toggleScore(movie.imdbID, $event)" />
+  <HeartRating :score="score" @update:modelValue="toggleScore(movie.imdbID, $event)" />
   
 </template>
