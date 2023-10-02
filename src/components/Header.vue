@@ -11,7 +11,7 @@
         <li>
           <router-link to="/fav" class="flex text-red-600 items-center cursor-pointer">
             <HeartIcon />
-            <span class="text-lg tracking-wide md:text-xl">Favorite Animes</span>
+            <span class="text-lg tracking-wide md:text-xl">Scored Animes</span>
           </router-link>
         </li>
         <li class="relative">

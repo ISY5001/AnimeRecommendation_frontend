@@ -1,9 +1,14 @@
 <script setup>
 import { ref } from "@vue/reactivity";
+import { watch } from 'vue';
 import CalendarIcon from "./icons/CalendarIcon.vue";
 import HeartIcon from "./icons/HeartIcon.vue";
-import { useFavoritStore } from "../store/favorit";
-const store = useFavoritStore();
+//import { useFavoritStore } from "../store/favorit";
+import HeartRating from './HeartRating.vue';
+//const store = useFavoritStore();
+
+import { useScoreStore } from "../store/score";
+const store = useScoreStore();
 
 const props = defineProps({
   movie: "",
@@ -11,24 +16,50 @@ const props = defineProps({
 
 const title = props.movie.Title.substr(0, 15) + "...";
 
-const toggleFav = (id, e) => {
-  const cek = store.favMovies.filter((movie) => movie.imdbID == id);
-  if (cek.length > 0) {
-    store.removeFromFav(id);
-    e.target.classList.remove("text-red-600");
+// This will hold the scores for each movie by ID.
+const scores = ref({}); 
+
+
+// Watch the scoredMovies array for changes and update the scores ref accordingly.
+watch(() => store.scoredMovies, (newVal) => {
+  newVal.forEach(movie => {
+    scores.value[movie.imdbID] = movie.Score;
+  });
+}, { deep: true });
+
+
+const toggleScore = (id, score) => {
+  const foundMovie = store.scoredMovies.find((movie) => movie.imdbID == id);
+  if (foundMovie) {
+    if (foundMovie.Score === score) {
+      // If the score is the same, remove the score
+      store.removeScore(id);
+      // Also remove the score from the foundMovie object
+      foundMovie.Score = 0;
+    } else {
+      // If the score is different, update the score
+      store.updateScore(id, score);
+      // Also update the score in the foundMovie object
+      foundMovie.Score = score;
+    }
   } else {
-    store.addToFavorit(id);
-    e.target.classList.add("text-red-600");
+    // If the movie is not scored, add the score
+    store.addScore(id, score);
+    // Also add the score to the foundMovie object
+    if (foundMovie) foundMovie.Score = score;
   }
 };
 
-const isFav = (imdbID) => {
-  if (store.favMovies) {
-    const result = store.favMovies.filter((movie) => movie.imdbID == imdbID);
+
+const isRat = (imdbID) => {
+  if (store.scoredMovies) {
+    const result = store.scoredMovies.filter((movie) => movie.imdbID == imdbID);
 
     return result.length ? true : false;
   }
 };
+
+
 </script>
 
 <template>
@@ -62,14 +93,17 @@ const isFav = (imdbID) => {
         </h3>
       </router-link>
 
-      <button class="cursor-pointer" @click="toggleFav(movie.imdbID, $event)">
-        <HeartIcon :class="{ 'text-red-600': isFav(movie.imdbID) }" />
-      </button>
+      
+      
     </div>
     <div class="text-gray-200 flex mt-3 items-center font-medium text-sm">
       <CalendarIcon />
 
       {{ movie.Year }}
+
+
     </div>
   </div>
+  <HeartRating v-model="movie.score" @update:modelValue="toggleScore(movie.imdbID, $event)" />
+  
 </template>
