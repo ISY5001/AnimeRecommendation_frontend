@@ -39,15 +39,22 @@ const score = computed(() => {
 const toggleScore = (id, newScore) => {
   const foundMovie = store.scoredMovies.find((movie) => movie.imdbID == id);
   if (foundMovie) {
-    if (foundMovie.Score === newScore) {
+    if (newScore === 0) {
+      // If the new score is 0, remove the score
+      store.removeScore(id);
+    } else if (foundMovie.Score === newScore) {
+      // If the score is the same, remove the score
       store.removeScore(id);
     } else {
+      // If the score is different, update the score
       store.updateScore(id, newScore);
     }
-  } else {
+  } else if (newScore > 0) {
+    // If the movie is not scored and the new score is greater than 0, add the score
     store.addScore(id, newScore);
   }
 };
+
 
 /*
 const isRat = (imdbID) => {

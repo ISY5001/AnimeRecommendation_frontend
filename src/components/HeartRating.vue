@@ -27,8 +27,14 @@ const emit = defineEmits();
 const rating = ref(props.modelValue);
 
 const setRating = (heart) => {
-  rating.value = heart;
-  emit('update:modelValue', heart);
+  if (rating.value === heart) {
+    rating.value = 0;
+  } else {
+    rating.value = heart;
+  }
+  emit('update:modelValue', rating.value);
 };
+
+
 </script>
 
