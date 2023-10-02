@@ -20,6 +20,8 @@
 <script setup>
 import { ref } from "@vue/runtime-core";
 import { useRouter } from "vue-router";
+import { setUsername } from '../store/userState.js'; // Adjust the path as needed
+
 import axios from "axios";
 
 const username = ref(localStorage.getItem("username") ?? "");
@@ -43,8 +45,7 @@ const loginUser = async () => {
     })();
     console.log(response.data.msg)
     if (response.data.msg === "success") {
-      // Navigate to the /recommend route with the userId as a query parameter
-      router.push({ name: "Recommend", query: { uid: response.data.username } });
+      setUsername(username.value);
       router.push("/");
     } else {
       console.error("Login failed:", response.data.error)

@@ -4,15 +4,15 @@ import Movies from "../components/Movies.vue";
 import Search from "../components/Search.vue";
 import IsLoading from "../components/IsLoading.vue";
 import { useMoviesStore } from "../store/movies";
-import { userRoute } from "vue-router";
+import { userState } from '../store/userState.js'; // Adjust the path as needed
+import axios from "axios";
+const username = userState.username;
+if (username == '') {
+  alert("username not defined!")
+} else {
+  alert("username is " + username);
+}
 
-const route = userRoute(); // Access the current route
-
-// Access the uid query parameter from the current route
-const uid = route.query.uid;
-
-// Display an alert with the uid
-alert(`User ID: ${uid}`);
 const store = useMoviesStore();
 
 // define some reatcive variables using ref function, which used to 
@@ -53,6 +53,35 @@ const handleScroll = (e) => {
     }
   }
 };
+
+// Function to send a POST request to the server
+const sendRecommendRequest = async () => {
+  try {
+    // Define the URL for the recommendation endpoint
+    const url = 'http://localhost:8282/recommend';
+
+    // Define the data to send in the request
+    const requestData = {
+      username: username,
+      // Add any other data you need to send
+    };
+
+    // Send the POST request
+    const response = await axios.post(url, requestData);
+
+    // Handle the response as needed
+    console.log('Recommendation request sent:', response.data);
+  } catch (error) {
+    // Handle errors
+    console.error('Error sending recommendation request:', error);
+  }
+};
+
+// Call sendRecommendRequest when needed, e.g., on component mount
+onMounted(() => {
+  sendRecommendRequest();
+});
+
 </script>
 
 <template>
