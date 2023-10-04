@@ -2,7 +2,12 @@
 import { ref } from "@vue/reactivity";
 import { watch } from 'vue';
 import CalendarIcon from "./icons/CalendarIcon.vue";
-import HeartIcon from "./icons/HeartIcon.vue";
+//import HeartIcon from "./icons/HeartIcon.vue";
+
+import emptyHeart from './icons/emptyHeart.vue';
+import fullHeart from './icons/fullHeart.vue';
+import halfHeart from './icons/halfHeart.vue';
+
 //import { useFavoritStore } from "../store/favorit";
 import HeartRating from './HeartRating.vue';
 //const store = useFavoritStore();
@@ -35,7 +40,7 @@ const score = computed(() => {
 }, { deep: true });*/
 
 
-
+/*
 const toggleScore = (id, newScore) => {
   const foundMovie = store.scoredMovies.find((movie) => movie.imdbID == id);
   if (foundMovie) {
@@ -54,16 +59,31 @@ const toggleScore = (id, newScore) => {
     store.addScore(id, newScore);
   }
 };
+*/
+
+const toggleScore = (id, newScore) => {
+  const foundMovie = store.scoredMovies.find((movie) => movie.imdbID == id);
+  if (foundMovie) {
+if (newScore === 0) {
+// If the new score is 0, remove the score
+store.removeScore(id);
+} else if (foundMovie.Score === newScore) {
+// If the score is the same, remove the score
+store.removeScore(id);
+} else if (foundMovie.Score === newScore - 0.5) {
+// If the previous score was half of the new score, update to the new full score
+store.updateScore(id, newScore);
+} else {
+// In other cases, simply update the score
+store.updateScore(id, newScore);
+}
+} else if (newScore > 0) {
+// If the movie is not scored and the new score is greater than 0, add the score
+store.addScore(id, newScore);
+}
+};
 
 
-/*
-const isRat = (imdbID) => {
-  if (store.scoredMovies) {
-    const result = store.scoredMovies.filter((movie) => movie.imdbID == imdbID);
-
-    return result.length ? true : false;
-  }
-};*/
 
 
 </script>
@@ -110,6 +130,8 @@ const isRat = (imdbID) => {
 
     </div>
   </div>
-  <HeartRating :score="score" @update:modelValue="toggleScore(movie.imdbID, $event)" />
+  <!--HeartRating :score="score" @update:modelValue="toggleScore(movie.imdbID, $event)" /-->
+  <HeartRating :modelValue="score" @update:modelValue="toggleScore(movie.imdbID, $event)" />
+
   
 </template>
