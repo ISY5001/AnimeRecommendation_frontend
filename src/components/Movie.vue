@@ -3,6 +3,9 @@ import { ref } from "@vue/reactivity";
 import CalendarIcon from "./icons/CalendarIcon.vue";
 import HeartIcon from "./icons/HeartIcon.vue";
 import { useFavoritStore } from "../store/favorit";
+
+
+
 const store = useFavoritStore();
 
 const props = defineProps({
@@ -68,7 +71,7 @@ const isFav = (imdbID) => {
     </div>
     <div class="text-gray-200 flex mt-3 items-center font-medium text-sm">
       <CalendarIcon />
-
+      <ChatBot />
       {{ movie.Year }}
     </div>
   </div>
