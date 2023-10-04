@@ -68,17 +68,28 @@ import axios from "axios";
             text: this.inputMessage,
             sender: 'user',
           });
+          
+          this.sendToServer(this.inputMessage);  // 发送用户输入到服务器
           this.inputMessage = '';
           // Here, you can also add a function to handle user's message and generate chatbot's response
         }
       },
       async sendToServer(message) {
       try {
-        const response = await axios.post('http://127.0.0.1:8282', {
+        
+        const response = await axios.post(`${"http://127.0.0.1:8282"}/chatbot`, {
           userMessage: message
         });
         console.log(response.data);  // 打印服务器的响应
+
         // 你可以在这里添加处理服务器响应的代码，例如添加 chatbot 的回复到 messages 数组
+        if (response.data.botReply) {
+            this.messages.push({
+                id: this.messages.length + 1,
+                text: response.data.botReply,
+                sender: 'chatbot',
+            });
+        }
       } catch (error) {
         console.error('There was an error!', error);
       }
