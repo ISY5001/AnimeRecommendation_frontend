@@ -37,12 +37,14 @@ export const useScoreStore = defineStore("score", {
         this.scoredMovies = this.scoredMovies.filter(movie => movie.imdbID != id);
         localStorage.setItem("scoredMovies", JSON.stringify(this.scoredMovies));
     },
+
     updateScore(id, newScore) {
       const movieIndex = this.scoredMovies.findIndex(movie => movie.imdbID === id);
       if (movieIndex !== -1) {
         this.scoredMovies[movieIndex] = { ...this.scoredMovies[movieIndex], Score: newScore };
         localStorage.setItem("scoredMovies", JSON.stringify(this.scoredMovies));
       }
-    },
+    }
+    
   },
 });

@@ -55,4 +55,7 @@ const totalScore = computed(() => {
   return ratings.value.reduce((sum, rating) => sum + (rating)*2, 0);
 });
 
+
+
+
 </script>
