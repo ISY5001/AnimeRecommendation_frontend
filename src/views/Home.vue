@@ -3,8 +3,12 @@ import { onMounted, ref } from "@vue/runtime-core";
 import Movies from "../components/Movies.vue";
 import Search from "../components/Search.vue";
 import IsLoading from "../components/IsLoading.vue";
-import { useMoviesStore } from "../store/movies";
-const store = useMoviesStore();
+
+import { useAnimesStore } from "../store/animes";
+const animeStore = useAnimesStore();
+
+//import { useMoviesStore } from "../store/movies";
+//const store = useMoviesStore();
 
 // define some reatcive variables using ref function, which used to 
 // store data that can trigger updates in teh component when their value change.
@@ -23,23 +27,23 @@ const favMovies = ref(
 // of results
 let totalPage = 0;
 setTimeout(() => {
-  totalPage = Math.ceil(store.totalResults / 10);
+  totalPage = Math.ceil(animeStore.totalResults / 10);
 }, 1000);
 
 // register a listener to the DOM, which can fetch more movies data
 // when user scroll to the bottem of page.
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
-  store.getAllMovies(keyword.value);
+  animeStore.getAllMovies(keyword.value);
 });
 
 const handleScroll = (e) => {
   const element = scrollComponent.value;
   if (element) {
     if (element.getBoundingClientRect().bottom < window.innerHeight) {
-      store.page++;
-      if (store.page <= totalPage) {
-        store.nextPage(store.page);
+      animeStore.page++;
+      if (animeStore.page <= totalPage) {
+        animeStore.nextPage(animeStore.page);
       }
     }
   }
@@ -51,8 +55,8 @@ const handleScroll = (e) => {
     <Search />
 
     <article ref="scrollComponent">
-      <Movies :movies="store.movies" />
+      <Movies :movies="animeStore.movies" />
     </article>
-    <IsLoading v-if="store.isLoading" />
+    <IsLoading v-if="animeStore.isLoading" />
   </main>
 </template>

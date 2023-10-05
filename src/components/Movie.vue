@@ -25,13 +25,13 @@ const title = props.movie.Title.substr(0, 15) + "...";
 
 // Use a computed property to get the score for the current movie from the store.
 const score = computed(() => {
-  const foundMovie = store.scoredMovies.find(movie => movie.imdbID === props.movie.imdbID);
+  const foundMovie = store.scoredMovies.find(movie => movie.Anime_id === props.movie.Anime_id);
   return foundMovie ? foundMovie.Score : 0;
 });
 
 
 const toggleScore = (id, newScore) => {
-  const foundMovie = store.scoredMovies.find((movie) => movie.imdbID == id);
+  const foundMovie = store.scoredMovies.find((movie) => movie.Anime_id == id);
 
   if (foundMovie) {
     if (newScore === 0) {
@@ -60,7 +60,7 @@ const updateMovieScore = (newScore) => {
 <template>
   <div class="w-full h-48 rounded-md overflow-hidden bg-gray-50 lg:h-64">
     <router-link
-      :to="{ name: 'Details', params: { id: movie.imdbID } }"
+      :to="{ name: 'Details', params: { id: movie.Anime_id } }"
       class="w-full h-full"
     >
       <div v-if="movie.Poster != 'N/A'" class="w-full h-full">
@@ -82,7 +82,7 @@ const updateMovieScore = (newScore) => {
 
   <div class="mt-4 w-full">
     <div class="text-red-200 flex items-center justify-between">
-      <router-link :to="{ name: 'Details', params: { id: movie.imdbID } }">
+      <router-link :to="{ name: 'Details', params: { id: movie.Anime_id } }">
         <h3 class="font-medium text-md tracking-wide" :title="movie.Title">
           {{ title }}
         </h3>
@@ -100,7 +100,7 @@ const updateMovieScore = (newScore) => {
     </div>
   </div>
   <!--HeartRating :score="score" @update:modelValue="toggleScore(movie.imdbID, $event)" /-->
-  <HeartRating :modelValue="score" @update:modelValue="toggleScore(movie.imdbID, $event)" />
+  <HeartRating :modelValue="score" @update:modelValue="toggleScore(movie.Anime_id, $event)" />
   
   
 </template>

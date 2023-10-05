@@ -1,4 +1,4 @@
-import axios from "axios";
+/*import axios from "axios";
 import { defineStore } from "pinia";
 
 const API_URL = "https://www.omdbapi.com/";
@@ -23,7 +23,7 @@ export const useMoviesStore = defineStore("movies", {
       this.isLoading = true;
       this.loadingMessage = "Please wait";
       if (!keyword) {
-        keyword = "One Piece";
+        keyword = "Mezzo DSA";
       }
 
       try {
@@ -37,7 +37,7 @@ export const useMoviesStore = defineStore("movies", {
       }
     },
     async nextPage(page) {
-      const keyword = localStorage.getItem("keyword") ? localStorage.getItem("keyword") : "One Piece";
+      const keyword = localStorage.getItem("keyword") ? localStorage.getItem("keyword") : "Mezzo DSA";
       this.isLoading = true;
       this.loadingMessage = "Please wait";
       try {
@@ -64,3 +64,4 @@ export const useMoviesStore = defineStore("movies", {
     },
   },
 });
+*/
