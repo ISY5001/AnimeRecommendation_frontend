@@ -3,7 +3,6 @@ import { onMounted, ref } from "@vue/runtime-core";
 import Movies from "../components/Movies.vue";
 import Search from "../components/Search.vue";
 import IsLoading from "../components/IsLoading.vue";
-
 import { useAnimesStore } from "../store/animes";
 const animeStore = useAnimesStore();
 
@@ -28,6 +27,8 @@ const favMovies = ref(
 let totalPage = 0;
 setTimeout(() => {
   totalPage = Math.ceil(animeStore.totalResults / 10);
+  console.log("Total Results:", animeStore.totalResults);
+  console.log("Calculated Total Pages:", totalPage);
 }, 1000);
 
 // register a listener to the DOM, which can fetch more movies data

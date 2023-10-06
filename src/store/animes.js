@@ -24,16 +24,50 @@ export const useAnimesStore = defineStore("movies", {
     async getAllMovies() {
         this.isLoading = true;
         this.loadingMessage = "Please wait";
+        
+
+        console.log('page number:',this.page)
         try {
             const { data } = await axios.get(`http://127.0.0.1:8282/anime?page=${this.page}`);
+            console.log("API Response:", data);
+            this.totalResults = data.totalResults;
+            
             if (data.msg && data.msg === "No anime found!") {
                 throw new Error("No anime found!");
             }
-            this.movies = data.animes; // Adjust based on the response structure
+            
+            this.movies = data.animes; // Replace the existing list of movies
             this.isLoading = false;
+
         } catch (err) {
             [this.isLoading, this.loadingMessage] = [true, err.message];
         }
     },
-  },
+    async nextPage() {
+        
+        //this.page += 1;  // Increment the page number
+        console.log('page number:',this.page)
+
+        try {
+            this.isLoading = true;
+            this.loadingMessage = "Loading next page...";
+
+            const { data } = await axios.get(`http://127.0.0.1:8282/anime?page=${this.page}`);
+            
+            if (data.msg && data.msg === "No anime found!") {
+                throw new Error("No more movies available!");
+            }
+
+            this.isLoading = false;
+            
+            // Append new movies to the existing list
+            data.animes.forEach(movie => this.movies.push(movie));
+
+        } catch (error) {
+            this.isLoading = false;
+            this.errorMessage = error.message;
+        }
+  }
+}
+
 });
