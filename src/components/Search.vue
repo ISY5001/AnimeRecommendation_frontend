@@ -2,15 +2,18 @@
 import { ref } from "@vue/reactivity";
 import SearchIcon from "./icons/SearchIcon.vue";
 import CloseIcon from "./icons/CloseIcon.vue";
-import { useMoviesStore } from "../store/movies";
-const store = useMoviesStore();
+//import { useMoviesStore } from "../store/movies";
+//const store = useMoviesStore();
+
+import { useAnimesStore } from "../store/animes";
+const store = useAnimesStore();
 
 const recents = ref(
   localStorage.getItem("recents")
     ? JSON.parse(localStorage.getItem("recents"))
     : []
 );
-const keyword = ref(localStorage.getItem("keyword") ?? "One Piece");
+const keyword = ref(localStorage.getItem("keyword") ?? "Mezzo DSA");
 const isRecent = ref(localStorage.getItem("isRecent") == "true" ? true : false);
 
 const handleSearch = () => {

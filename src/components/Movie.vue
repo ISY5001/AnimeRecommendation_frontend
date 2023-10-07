@@ -2,7 +2,11 @@
 import { ref } from "@vue/reactivity";
 import { watch } from 'vue';
 import CalendarIcon from "./icons/CalendarIcon.vue";
-import HeartIcon from "./icons/HeartIcon.vue";
+
+//import HeartIcon from "./icons/HeartIcon.vue";
+import emptyHeart from './icons/emptyHeart.vue';
+import fullHeart from './icons/fullHeart.vue';
+import halfHeart from './icons/halfHeart.vue';
 
 //import { useFavoritStore } from "../store/favorit";
 import HeartRating from './HeartRating.vue';
@@ -20,37 +24,25 @@ const props = defineProps({
 
 const title = props.movie.Title.substr(0, 15) + "...";
 
-// This will hold the scores for each movie by ID.
-//const scores = ref({}); 
 
 // Use a computed property to get the score for the current movie from the store.
 const score = computed(() => {
-  const foundMovie = store.scoredMovies.find(movie => movie.imdbID === props.movie.imdbID);
+  const foundMovie = store.scoredMovies.find(movie => movie.Anime_id === props.movie.Anime_id);
   return foundMovie ? foundMovie.Score : 0;
 });
 
-// Watch the scoredMovies array for changes and update the scores ref accordingly.
-/*watch(() => store.scoredMovies, (newVal) => {
-  newVal.forEach(movie => {
-    scores.value[movie.imdbID] = movie.Score;
-  });
-}, { deep: true });*/
-
-
 
 const toggleScore = (id, newScore) => {
-  const foundMovie = store.scoredMovies.find((movie) => movie.imdbID == id);
+  const foundMovie = store.scoredMovies.find((movie) => movie.Anime_id == id);
+
   if (foundMovie) {
     if (newScore === 0) {
       // If the new score is 0, remove the score
       store.removeScore(id);
-    } else if (foundMovie.Score === newScore) {
-      // If the score is the same, remove the score
-      store.removeScore(id);
-    } else {
+    } else if (foundMovie.Score !== newScore) {
       // If the score is different, update the score
       store.updateScore(id, newScore);
-    }
+    } // No need for other conditions as the HeartRating component manages the half and full toggle
   } else if (newScore > 0) {
     // If the movie is not scored and the new score is greater than 0, add the score
     store.addScore(id, newScore);
@@ -58,14 +50,11 @@ const toggleScore = (id, newScore) => {
 };
 
 
-/*
-const isRat = (imdbID) => {
-  if (store.scoredMovies) {
-    const result = store.scoredMovies.filter((movie) => movie.imdbID == imdbID);
 
-    return result.length ? true : false;
-  }
-};*/
+const updateMovieScore = (newScore) => {
+      useScoreStore().updateScore(movieId.value, newScore);
+      movieScore.value = newScore;
+    };
 
 
 </script>
@@ -73,7 +62,7 @@ const isRat = (imdbID) => {
 <template>
   <div class="w-full h-48 rounded-md overflow-hidden bg-gray-50 lg:h-64">
     <router-link
-      :to="{ name: 'Details', params: { id: movie.imdbID } }"
+      :to="{ name: 'Details', params: { id: movie.Anime_id } }"
       class="w-full h-full"
     >
       <div v-if="movie.Poster != 'N/A'" class="w-full h-full">
@@ -95,7 +84,7 @@ const isRat = (imdbID) => {
 
   <div class="mt-4 w-full">
     <div class="text-red-200 flex items-center justify-between">
-      <router-link :to="{ name: 'Details', params: { id: movie.imdbID } }">
+      <router-link :to="{ name: 'Details', params: { id: movie.Anime_id } }">
         <h3 class="font-medium text-md tracking-wide" :title="movie.Title">
           {{ title }}
         </h3>
@@ -112,6 +101,8 @@ const isRat = (imdbID) => {
 
     </div>
   </div>
-  <HeartRating :score="score" @update:modelValue="toggleScore(movie.imdbID, $event)" />
+  <!--HeartRating :score="score" @update:modelValue="toggleScore(movie.imdbID, $event)" /-->
+  <HeartRating :modelValue="score" @update:modelValue="toggleScore(movie.Anime_id, $event)" />
+  
   
 </template>

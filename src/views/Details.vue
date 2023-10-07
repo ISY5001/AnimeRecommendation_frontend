@@ -8,10 +8,13 @@ import TimeIcon from "../components/icons/TimeIcon.vue";
 import HeartIcon from "../components/icons/HeartIcon.vue";
 import LocationIcon from "../components/icons/LocationIcon.vue";
 import StarIcon from "../components/icons/StarIcon.vue";
-import { useMoviesStore } from "../store/movies";
+//import { useMoviesStore } from "../store/movies";
 import { useFavoritStore } from "../store/favorit";
 const favStore = useFavoritStore();
-const moviesStore = useMoviesStore();
+//const moviesStore = useMoviesStore();
+
+import { useAnimesStore } from "../store/animes";
+const animeStore = useAnimesStore();
 
 const props = defineProps({
   id: String,
@@ -19,16 +22,16 @@ const props = defineProps({
 const films = ref([]);
 
 watchEffect(() => {
-  films.value = moviesStore.movies.filter((movie) => movie.imdbID != props.id);
-  moviesStore.getMovieByID(props.id);
+  films.value = animeStore.movies.filter((movie) => movie.Anime_id != props.id);
+  animeStore.getMovieByID(props.id);
 });
 
 onMounted(() => {
-  moviesStore.getMovieByID(props.id);
+  animeStore.getMovieByID(props.id);
 });
 
 const toggleFav = (id, e) => {
-  const cek = favStore.favMovies.filter((movie) => movie.imdbID == id);
+  const cek = favStore.favMovies.filter((movie) => movie.Anime_id == id);
   if (cek.length > 0) {
     favStore.removeFromFav(id);
     e.target.classList.remove("text-red-600");
@@ -38,28 +41,28 @@ const toggleFav = (id, e) => {
   }
 };
 
-const handleTextFav = (imdbID) => {
-  const cek = favStore.favMovies.filter((movie) => movie.imdbID == imdbID);
+const handleTextFav = (Anime_id) => {
+  const cek = favStore.favMovies.filter((movie) => movie.Anime_id == Anime_id);
   return cek.length ? "Remove from Favorite" : "Add to Favorite";
 };
 
-const getClass = (imdbID) => {
-  const cek = favStore.favMovies.filter((movie) => movie.imdbID == imdbID);
+const getClass = (Anime_id) => {
+  const cek = favStore.favMovies.filter((movie) => movie.Anime_id == Anime_id);
   return cek.length ? "text-red-600" : "text-gray-300";
 };
 </script>
 
 <template>
   <main>
-    <IsLoading v-if="moviesStore.isLoading" />
+    <IsLoading v-if="animeStore.isLoading" />
     <article class="lg:flex lg:gap-5 lg:justify-between lg:items-center">
       <div
         class="w-full h-64 rounded-md overflow-hidden md:h-80 lg:w-6/12 lg:h-96"
       >
         <img
-          :src="moviesStore.movie.Poster"
+          :src="animeStore.movie.Poster"
           class="w-full h-full object-cover"
-          :alt="moviesStore.movie.Title"
+          :alt="animeStore.movie.Title"
         />
       </div>
       <div class="my-5 lg:w-5/12 lg:mt-0">
@@ -73,7 +76,7 @@ const getClass = (imdbID) => {
             md:text-sm
           "
         >
-          {{ moviesStore.movie.Genre }}
+          {{ animeStore.movie.Genre }}
         </p>
 
         <h3
@@ -85,7 +88,7 @@ const getClass = (imdbID) => {
             md:text-2xl
           "
         >
-          {{ moviesStore.movie.Title }}
+          {{ animeStore.movie.Title }}
         </h3>
         <div
           class="
@@ -100,26 +103,26 @@ const getClass = (imdbID) => {
           <div class="flex items-center text-gray-400 font-light text-sm">
             <CalendarIcon />
 
-            {{ moviesStore.movie.Released }}
+            {{ animeStore.movie.Released }}
           </div>
 
           <div class="flex items-center text-gray-400 font-light text-sm">
             <TimeIcon />
 
-            {{ moviesStore.movie.Runtime }}
+            {{ animeStore.movie.Runtime }}
           </div>
 
           <div class="flex items-center text-gray-400 font-light text-sm">
             <LocationIcon />
 
-            {{ moviesStore.movie.Country }}
+            {{ animeStore.movie.Country }}
           </div>
         </div>
         <div class="flex items-center text-gray-400 font-light text-sm my-8">
           <StarIcon />
 
-          {{ moviesStore.movie.imdbRating }} -
-          {{ moviesStore.movie.imdbVotes }} Votes
+          {{ animeStore.movie.imdbRating }} -
+          {{ animeStore.movie.imdbVotes }} Votes
         </div>
 
         <p
@@ -131,18 +134,18 @@ const getClass = (imdbID) => {
             md:tracking-widest
           "
         >
-          {{ moviesStore.movie.Plot }}
+          {{ animeStore.movie.Plot }}
         </p>
 
         <button
-          @click="toggleFav(moviesStore.movie.imdbID, $event)"
+          @click="toggleFav(animeStore.movie.Anime_id, $event)"
           class="flex items-center mt-8 cursor-pointer"
-          :class="getClass(moviesStore.movie.imdbID)"
+          :class="getClass(animeStore.movie.Anime_id)"
         >
           <HeartIcon />
 
           <span class="text-sm tracking-wide">
-            {{ handleTextFav(moviesStore.movie.imdbID) }}
+            {{ handleTextFav(animeStore.movie.Anime_id) }}
           </span>
         </button>
       </div>
