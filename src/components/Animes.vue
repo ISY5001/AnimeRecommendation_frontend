@@ -1,11 +1,11 @@
 <script setup>
-alert('Animes.vue component loaded.');
+// alert('Animes.vue component loaded.');
 import Anime from "./Anime.vue";
 const props = defineProps({
   animes: Array,
 });
-alert("props");
-alert(JSON.stringify(props, null, 2)); 
+// alert("props");
+// alert(JSON.stringify(props, null, 2)); 
 // {
 //   "animes": []
 // }

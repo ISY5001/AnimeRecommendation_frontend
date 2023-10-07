@@ -1,5 +1,5 @@
 <script setup>
-alert('Anime.vue component loaded.');
+// alert('Anime.vue component loaded.');
 import { ref } from "@vue/reactivity";
 import CalendarIcon from "./icons/CalendarIcon.vue";
 import HeartIcon from "./icons/HeartIcon.vue";

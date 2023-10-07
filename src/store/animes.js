@@ -54,17 +54,17 @@ export const useAnimesStore = defineStore("animes", {
       } catch (error) {}
     },
     // to do
-    async getanimeByID(id) {
-      this.isLoading = true;
-      try {
-        const { data, status } = await axios.get(`${API_URL}?apikey=${API_KEY}&i=${id}`);
-        if (status != 200) {
-          throw new Error(data.Error);
-        }
-        [this.anime, this.isLoading] = [data, false];
-      } catch (err) {
-        console.log(err.message);
-      }
-    },
+    // async getanimeByID(id) {
+    //   this.isLoading = true;
+    //   try {
+    //     const { data, status } = await axios.get(`${API_URL}?apikey=${API_KEY}&i=${id}`);
+    //     if (status != 200) {
+    //       throw new Error(data.Error);
+    //     }
+    //     [this.anime, this.isLoading] = [data, false];
+    //   } catch (err) {
+    //     console.log(err.message);
+    //   }
+    // },
   },
 });

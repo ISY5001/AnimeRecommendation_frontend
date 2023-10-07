@@ -4,7 +4,7 @@ import Animes from "../components/Animes.vue";
 import Search from "../components/Search.vue";
 import IsLoading from "../components/IsLoading.vue";
 import { useAnimesStore } from "../store/animes";
-alert("Home.vue loaded");
+// alert("Home.vue loaded");
 const store = useAnimesStore();
 
 // define some reatcive variables using ref function, which used to 
@@ -32,15 +32,14 @@ setTimeout(() => {
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
   store.getAllAnimes(keyword.value);
-  alert("store.Animes is ");
-  alert(store.Animes); // success
 });
 
 const handleScroll = (e) => {
   const element = scrollComponent.value;
   if (element) {
     if (element.getBoundingClientRect().bottom < window.innerHeight) {
-      store.page++;
+      store.page++; // it works
+      alert(totalPage);
       if (store.page <= totalPage) {
         store.nextPage(store.page);
       }
