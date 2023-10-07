@@ -49,7 +49,7 @@ export default {
     return {
       selectedFile: null,
       imageUrl: '',
-      buttonText: 'Please Select an Anime Image'
+      buttonText: 'Please Select Your Image'
     };
   },
   methods: {
