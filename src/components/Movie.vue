@@ -1,24 +1,29 @@
 <script setup>
-import { ref } from "@vue/reactivity";
-import { watch } from 'vue';
+import { watch,ref } from 'vue';
+import { onMounted } from 'vue';
 import CalendarIcon from "./icons/CalendarIcon.vue";
 //import HeartIcon from "./icons/HeartIcon.vue";
 import emptyHeart from './icons/emptyHeart.vue';
 import fullHeart from './icons/fullHeart.vue';
 import halfHeart from './icons/halfHeart.vue';
+import axios from 'axios';
 
 //import { useFavoritStore } from "../store/favorit";
 import HeartRating from './HeartRating.vue';
 //const store = useFavoritStore();
 import { computed } from 'vue';
 import { useScoreStore } from "../store/score";
-
+import { useAccountStore } from "../store/accountStore";
 
 const store = useScoreStore();
 
 const props = defineProps({
   movie: Object,
+  movies: Array,
+  rateAnime: Function,
+  fetchRatings: Function,
 });
+
 
 const title = props.movie.Title.substr(0, 15) + "...";
 
@@ -45,17 +50,62 @@ const toggleScore = (id, newScore) => {
     // If the movie is not scored and the new score is greater than 0, add the score
     store.addScore(id, newScore);
   }
+
+  // Now, call the rateAnime method passed from the parent component
+  props.rateAnime(id, newScore);
 };
-
-
 
 const updateMovieScore = (newScore) => {
       useScoreStore().updateScore(movieId.value, newScore);
       movieScore.value = newScore;
     };
 
+onMounted(async () => {
+    // Assuming the Anime_id is a unique identifier for the movie
+    const currentRating = await fetchRatings(props.movie.Anime_id);
+    
+    // Now use currentRating as you see fit.
+});
+const accountStore = useAccountStore();
+
+// Access the account_id
+
+const fetchRatings = async (account_id, anime_id) => {
+    try {
+      // Access the account_id
+      //const account_id = ref(accountStore.getAccountId);
+        //console.log(account_id);
+        const anime_id = props.movie.Anime_id;
+        console.log(anime_id);
+        const response = await axios.get(`${"http://127.0.0.1:8282"}/rating/fetch_ratings/${account_id}/${anime_id}`);
+        if (response.status === 200) {
+            return response.data; // The ratings data
+        }
+        // Handle other response statuses if needed
+    } catch (error) {
+        console.error("Error fetching ratings:", error);
+    }
+};
+
+const rateAnimeFunction = async (anime_id, score) => {
+    try {
+        const response = await axios.post(`${"http://127.0.0.1:8282"}/rating/upload_ratings`, {
+            anime_id: anime_id,
+            score: score
+            // ... any other data needed
+        });
+        if (response.status === 200) {
+            console.log(response.data.msg); // "Rating updated successfully!"
+        }
+        // Handle other response statuses if needed
+    } catch (error) {
+        console.error("Error updating rating:", error);
+    }
+};
+
 
 </script>
+
 
 <template>
   <div class="w-full h-48 rounded-md overflow-hidden bg-gray-50 lg:h-64">

@@ -56,14 +56,14 @@ const handleScroll = (e) => {
   }
 };
 
+
 </script>
 
 <template>
   <main>
     <Search />
-
     <article ref="scrollComponent">
-      <Movies :movies="animeStore.movies" />
+      <Movies :movies="animeStore.movies" :rateAnime="rateAnime" :fetchRatings="fetchRatings" />
     </article>
     <IsLoading v-if="animeStore.isLoading" />
   </main>

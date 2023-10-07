@@ -67,7 +67,9 @@ export const useAnimesStore = defineStore("movies", {
             this.isLoading = false;
             this.errorMessage = error.message;
         }
-  }
+  },
+
+  
 
 
 
