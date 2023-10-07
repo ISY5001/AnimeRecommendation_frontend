@@ -2,14 +2,15 @@ import axios from "axios";
 import { defineStore } from "pinia";
 
 const API_URL = "https://www.omdbapi.com/";
+const BACK_END = "http://127.0.0.1:8282/";
 const API_KEY = "f9bfc5b4";
 
-export const useMoviesStore = defineStore("movies", {
-  // state function defines the intial state of the movies store
+export const useAnimesStore = defineStore("animes", {
+  // state function defines the intial state of the Animes store
   state: () => {
     return {
-      movies: [],
-      movie: {},
+      Animes: [],
+      anime: {},
       isLoading: false,
       totalResults: 0,
       loadingMessage: "Please wait",
@@ -19,39 +20,21 @@ export const useMoviesStore = defineStore("movies", {
   // actions object defines methods that can be used to interact with and modify
   // the store's state
   actions: {
-    async getAllMovies(keyword) {
+    async getAllAnimes(keyword) {
       this.isLoading = true;
       this.loadingMessage = "Please wait";
       if (!keyword) {
-        keyword = "One Piece";
+        keyword = "One Piece"; // no need
       }
 
       try {
-        const { data } = await axios.get(`${API_URL}?apikey=${API_KEY}&s=${keyword}`);
-        // the data looks like
-
-        // {"Search": [
-        //     {
-        //       "Title":"Pie for Two",
-        //       "Year":"1933",
-        //       "imdbID":"tt0175035",
-        //       "Type":"movie",
-        //       "Poster":"N/A"
-        //     },{
-        //       "Title":"My Dad Only Likes Two Kinds of Pie",
-        //       "Year":"2013",
-        //       "imdbID":"tt3034864",
-        //       "Type":"movie",
-        //       "Poster":"N/A"
-        //     }
-        //   ],
-        //   "totalResults":"2",
-        //   "Response":"True"
-        // }
+        // const { data } = await axios.get(`${API_URL}?apikey=${API_KEY}&s=${keyword}`);
+        const { data } = await axios.get(`${BACK_END}fetchAnimes`);
+        // alert(JSON.stringify(data, null, 2)); // success
         if (data.Response == "False") {
           throw new Error(data.Error);
         }
-        [this.totalResults, this.movies, this.isLoading, this.page] = [data.totalResults, data.Search, false, 1];
+        [this.totalResults, this.Animes, this.isLoading, this.page] = [data.totalResults, data.Search, false, 1];
       } catch (err) {
         [this.isLoading, this.loadingMessage] = [true, err.message];
       }
@@ -61,23 +44,24 @@ export const useMoviesStore = defineStore("movies", {
       this.isLoading = true;
       this.loadingMessage = "Please wait";
       try {
-        const { data } = await axios.get(`${API_URL}?apikey=${API_KEY}&s=${keyword}&page=${page}`);
-
+        // const { data } = await axios.get(`${API_URL}?apikey=${API_KEY}&s=${keyword}&page=${page}`);
+        const { data } = await axios.get(`${BACK_END}fetchAnimes&page=${page}`);
         if (data.Response == "False") {
           throw new Error(data.Error);
         }
         this.isLoading = false;
-        data.Search.forEach(movie => this.movies.push(movie));
+        data.Search.forEach(anime => this.Animes.push(anime));
       } catch (error) {}
     },
-    async getMovieByID(id) {
+    // to do
+    async getanimeByID(id) {
       this.isLoading = true;
       try {
         const { data, status } = await axios.get(`${API_URL}?apikey=${API_KEY}&i=${id}`);
         if (status != 200) {
           throw new Error(data.Error);
         }
-        [this.movie, this.isLoading] = [data, false];
+        [this.anime, this.isLoading] = [data, false];
       } catch (err) {
         console.log(err.message);
       }

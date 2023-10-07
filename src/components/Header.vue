@@ -42,7 +42,7 @@
     </nav>
 
     <p class="mt-6 mb-7 text-gray-200 text-xs font-light tracking-wide md:text-lg md:tracking-wider lg:text-sm">
-      You can search any movies on this website
+      You can search any animes on this website
     </p>
   </header>
 </template>
