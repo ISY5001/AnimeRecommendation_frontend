@@ -3,6 +3,7 @@ import { ref } from "@vue/reactivity";
 import { watch } from 'vue';
 import CalendarIcon from "./icons/CalendarIcon.vue";
 import HeartIcon from "./icons/HeartIcon.vue";
+
 //import { useFavoritStore } from "../store/favorit";
 import HeartRating from './HeartRating.vue';
 //const store = useFavoritStore();
@@ -11,6 +12,7 @@ import { useScoreStore } from "../store/score";
 
 
 const store = useScoreStore();
+
 
 const props = defineProps({
   movie: Object,
@@ -104,7 +106,7 @@ const isRat = (imdbID) => {
     </div>
     <div class="text-gray-200 flex mt-3 items-center font-medium text-sm">
       <CalendarIcon />
-
+      <ChatBot />
       {{ movie.Year }}
 
 
