@@ -40,12 +40,13 @@ export const useAnimesStore = defineStore("animes", {
       }
     },
     async nextPage(page) {
+      // alert("calling nextPage..");
       const keyword = localStorage.getItem("keyword") ? localStorage.getItem("keyword") : "One Piece";
       this.isLoading = true;
       this.loadingMessage = "Please wait";
       try {
         // const { data } = await axios.get(`${API_URL}?apikey=${API_KEY}&s=${keyword}&page=${page}`);
-        const { data } = await axios.get(`${BACK_END}fetchAnimes&page=${page}`);
+        const { data } = await axios.get(`${BACK_END}fetchAnimes?page=${page}`);
         if (data.Response == "False") {
           throw new Error(data.Error);
         }

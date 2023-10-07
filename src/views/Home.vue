@@ -22,11 +22,13 @@ const favAnimes = ref(
 );
 // the total number of pages for anime results based on the total number
 // of results
-let totalPage = 0;
-setTimeout(() => {
-  totalPage = Math.ceil(store.totalResults / 10);
-}, 1000);
+let totalPage = 10;
 
+setTimeout(() => {
+  // totalPage = Math.ceil(store.totalResults * 10);
+
+}, 1000);
+alert(totalPage);
 // register a listener to the DOM, which can fetch more animes data
 // when user scroll to the bottem of page.
 onMounted(() => {
@@ -39,7 +41,6 @@ const handleScroll = (e) => {
   if (element) {
     if (element.getBoundingClientRect().bottom < window.innerHeight) {
       store.page++; // it works
-      alert(totalPage);
       if (store.page <= totalPage) {
         store.nextPage(store.page);
       }
