@@ -29,9 +29,15 @@
             </div>
           </transition>
         </li>
+        
         <!-- Add more navigation links as needed -->
       </ul>
     </nav>
+
+  <div id="app">
+    <FloatingChatbot />
+    <!-- 其他内容 -->
+  </div>
 
     <p class="mt-6 mb-7 text-gray-200 text-xs font-light tracking-wide md:text-lg md:tracking-wider lg:text-sm">
       You can search any movies on this website
@@ -41,6 +47,7 @@
 
 <script setup>
 import Search from "./Search.vue";
+import ChatBotIcon from "./icons/ChatBotIcon.vue";
 import HeartIcon from "./icons/HeartIcon.vue";
 import StarIcon from "./icons/StarIcon.vue";
 import { ref, reactive } from 'vue';

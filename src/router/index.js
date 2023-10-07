@@ -47,6 +47,7 @@ const routes = [
       leaveClass: "animate__animated animate__fadeOutLeft",
     },
   },
+
   {
     path: "/:pathMatch(.*)*",
     name: "NotFound",

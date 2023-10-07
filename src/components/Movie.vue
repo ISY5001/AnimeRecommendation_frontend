@@ -2,6 +2,7 @@
 import { ref } from "@vue/reactivity";
 import { watch } from 'vue';
 import CalendarIcon from "./icons/CalendarIcon.vue";
+
 //import HeartIcon from "./icons/HeartIcon.vue";
 import emptyHeart from './icons/emptyHeart.vue';
 import fullHeart from './icons/fullHeart.vue';
@@ -15,6 +16,7 @@ import { useScoreStore } from "../store/score";
 
 
 const store = useScoreStore();
+
 
 const props = defineProps({
   movie: Object,
@@ -93,7 +95,7 @@ const updateMovieScore = (newScore) => {
     </div>
     <div class="text-gray-200 flex mt-3 items-center font-medium text-sm">
       <CalendarIcon />
-
+      <ChatBot />
       {{ movie.Year }}
 
 
