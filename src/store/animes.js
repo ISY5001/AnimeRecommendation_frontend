@@ -68,6 +68,10 @@ export const useAnimesStore = defineStore("movies", {
             this.errorMessage = error.message;
         }
   }
+
+
+
+  
 }
 
 });

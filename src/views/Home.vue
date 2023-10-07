@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from "@vue/runtime-core";
+import { onMounted, ref, nextTick } from "@vue/runtime-core";
 import Movies from "../components/Movies.vue";
 import Search from "../components/Search.vue";
 import IsLoading from "../components/IsLoading.vue";
@@ -43,12 +43,19 @@ const handleScroll = (e) => {
   if (element) {
     if (element.getBoundingClientRect().bottom < window.innerHeight) {
       animeStore.page++;
+      const savedScrollPosition = window.scrollY; // Save the current scroll position
       if (animeStore.page <= totalPage) {
-        animeStore.nextPage(animeStore.page);
+        animeStore.nextPage(animeStore.page).then(() => {
+          // Restore the scroll position after the DOM is updated
+          nextTick(() => {
+            window.scrollTo(0, savedScrollPosition);
+          });
+        });
       }
     }
   }
 };
+
 </script>
 
 <template>
