@@ -2,21 +2,12 @@
 import { ref } from "@vue/reactivity";
 import { watch } from 'vue';
 import CalendarIcon from "./icons/CalendarIcon.vue";
-
-//import HeartIcon from "./icons/HeartIcon.vue";
-import emptyHeart from './icons/emptyHeart.vue';
-import fullHeart from './icons/fullHeart.vue';
-import halfHeart from './icons/halfHeart.vue';
-
-//import { useFavoritStore } from "../store/favorit";
-import HeartRating from './HeartRating.vue';
-//const store = useFavoritStore();
-import { computed } from 'vue';
-import { useScoreStore } from "../store/score";
+import HeartIcon from "./icons/HeartIcon.vue";
+import { useFavoritStore } from "../store/favorit";
 
 
-const store = useScoreStore();
 
+const store = useFavoritStore();
 
 const props = defineProps({
   movie: Object,
@@ -24,39 +15,24 @@ const props = defineProps({
 
 const title = props.movie.Title.substr(0, 15) + "...";
 
-
-// Use a computed property to get the score for the current movie from the store.
-const score = computed(() => {
-  const foundMovie = store.scoredMovies.find(movie => movie.Anime_id === props.movie.Anime_id);
-  return foundMovie ? foundMovie.Score : 0;
-});
-
-
-const toggleScore = (id, newScore) => {
-  const foundMovie = store.scoredMovies.find((movie) => movie.Anime_id == id);
-
-  if (foundMovie) {
-    if (newScore === 0) {
-      // If the new score is 0, remove the score
-      store.removeScore(id);
-    } else if (foundMovie.Score !== newScore) {
-      // If the score is different, update the score
-      store.updateScore(id, newScore);
-    } // No need for other conditions as the HeartRating component manages the half and full toggle
-  } else if (newScore > 0) {
-    // If the movie is not scored and the new score is greater than 0, add the score
-    store.addScore(id, newScore);
+const toggleFav = (id, e) => {
+  const cek = store.favMovies.filter((movie) => movie.imdbID == id);
+  if (cek.length > 0) {
+    store.removeFromFav(id);
+    e.target.classList.remove("text-red-600");
+  } else {
+    store.addToFavorit(id);
+    e.target.classList.add("text-red-600");
   }
 };
 
+const isFav = (imdbID) => {
+  if (store.favMovies) {
+    const result = store.favMovies.filter((movie) => movie.imdbID == imdbID);
 
-
-const updateMovieScore = (newScore) => {
-      useScoreStore().updateScore(movieId.value, newScore);
-      movieScore.value = newScore;
-    };
-
-
+    return result.length ? true : false;
+  }
+};
 </script>
 
 <template>
@@ -90,8 +66,9 @@ const updateMovieScore = (newScore) => {
         </h3>
       </router-link>
 
-      
-      
+      <button class="cursor-pointer" @click="toggleFav(movie.imdbID, $event)">
+        <HeartIcon :class="{ 'text-red-600': isFav(movie.imdbID) }" />
+      </button>
     </div>
     <div class="text-gray-200 flex mt-3 items-center font-medium text-sm">
       <CalendarIcon />
@@ -101,8 +78,4 @@ const updateMovieScore = (newScore) => {
 
     </div>
   </div>
-  <!--HeartRating :score="score" @update:modelValue="toggleScore(movie.imdbID, $event)" /-->
-  <HeartRating :modelValue="score" @update:modelValue="toggleScore(movie.Anime_id, $event)" />
-  
-  
 </template>
