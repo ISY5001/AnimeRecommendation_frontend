@@ -2,6 +2,7 @@
 import { watch,ref } from 'vue';
 import { onMounted } from 'vue';
 import CalendarIcon from "./icons/CalendarIcon.vue";
+
 //import HeartIcon from "./icons/HeartIcon.vue";
 import emptyHeart from './icons/emptyHeart.vue';
 import fullHeart from './icons/fullHeart.vue';
@@ -16,6 +17,7 @@ import { useScoreStore } from "../store/score";
 import { useAccountStore } from "../store/accountStore";
 
 const store = useScoreStore();
+
 
 const props = defineProps({
   movie: Object,
@@ -143,7 +145,7 @@ const rateAnimeFunction = async (anime_id, score) => {
     </div>
     <div class="text-gray-200 flex mt-3 items-center font-medium text-sm">
       <CalendarIcon />
-
+      <ChatBot />
       {{ movie.Year }}
 
 
