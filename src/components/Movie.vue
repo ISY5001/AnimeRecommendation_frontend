@@ -14,9 +14,12 @@ import HeartRating from './HeartRating.vue';
 //const store = useFavoritStore();
 import { computed } from 'vue';
 import { useScoreStore } from "../store/score";
-import { useAccountStore } from "../store/accountStore";
+import { userInfoStore } from "../store/userInfo";
 
 const store = useScoreStore();
+const user_info = userInfoStore();
+
+
 
 
 const props = defineProps({
@@ -68,21 +71,19 @@ onMounted(async () => {
     
     // Now use currentRating as you see fit.
 });
-const accountStore = useAccountStore();
+
 
 // Access the account_id
-const fetchAccountID = async () => {
+/*const fetchAccountID = async () => {
 
   console.log("fetchaccountID function started");
   try {
-    console.log("try")
+    
     // Send a POST request to your Flask backend for user registration
     const response = await (async() => {
-      return axios.post(`${"http://127.0.0.1:8282"}/get_userid`, {
-        username: username.value,
-        password: password.value,
-      });
+      return axios.post(`${"http://127.0.0.1:8282"}/get_userid`);
     })();
+    console.log(response);
 
     if (response.data.msg === "success") {
       // Store the account_id in local storage
@@ -98,7 +99,7 @@ const fetchAccountID = async () => {
     console.error("fetch failed:", error);
   }
 };
-
+*/
 /*
 const fetchAccountID = async () => {
     try {
@@ -130,6 +131,8 @@ const fetchRatings = async (account_id, anime_id) => {
       // Access the account_id
       //const account_id = ref(accountStore.getAccountId);
         //console.log(account_id);
+        const account_id = user_info.account_id;
+        console.log(account_id);
         const anime_id = props.movie.Anime_id;
         console.log(anime_id);
         const response = await axios.get(`${"http://127.0.0.1:8282"}/rating/fetch_ratings/${account_id}/${anime_id}`);
