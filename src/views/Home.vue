@@ -35,7 +35,7 @@ setTimeout(() => {
 // when user scroll to the bottem of page.
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
-  animeStore.getAllMovies(keyword.value);
+  //animeStore.getAllMovies(keyword.value);
 });
 
 const handleScroll = (e) => {

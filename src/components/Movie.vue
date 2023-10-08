@@ -66,6 +66,7 @@ const updateMovieScore = (newScore) => {
     };
 
 onMounted(async () => {
+  console.log('Movie.vue component mounted.');
     // Assuming the Anime_id is a unique identifier for the movie
     const currentRating = await fetchRatings(props.movie.Anime_id);
     
@@ -174,11 +175,7 @@ const rateAnimeFunction = async (anime_id, score) => {
     }
 };
 
-/*
-onMounted(async () => {
-    await fetchAccountID();
-});
-*/
+
 
 </script>
 

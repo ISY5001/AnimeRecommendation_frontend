@@ -46,7 +46,7 @@ export const useAnimesStore = defineStore("movies", {
     async nextPage() {
         
         //this.page += 1;  // Increment the page number
-        console.log('page number:',this.page)
+        console.log('next page number:',this.page)
 
         try {
             this.isLoading = true;
