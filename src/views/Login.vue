@@ -43,6 +43,8 @@ const username = ref(localStorage.getItem("username") ?? "");
 const password = ref(localStorage.getItem("password") ?? "");
 const router = useRouter();
 
+
+
 const loginUser = async () => {
   if (!username.value || !password.value) {
     // Perform client-side validation of the form
@@ -62,6 +64,8 @@ const loginUser = async () => {
     if (response.data.msg === "success") {
       // Store the account_id in local storage
       router.push("/");
+      console.log('data:',response.data);
+      const accoun_id = response.data.account_id;
 
     } else {
       console.error("Login failed:", response.data.error)
@@ -72,7 +76,9 @@ const loginUser = async () => {
   }
 };
 
+
 </script>
+
   
 <style scoped>
 .register {

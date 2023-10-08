@@ -63,7 +63,7 @@ const handleScroll = (e) => {
   <main>
     <Search />
     <article ref="scrollComponent">
-      <Movies :movies="animeStore.movies" :rateAnime="rateAnime" :fetchRatings="fetchRatings" />
+      <Movies :movies="animeStore.movies" :fetchAccountID="fetchAccountID" :fetchRatings="fetchRatings" />
     </article>
     <IsLoading v-if="animeStore.isLoading" />
   </main>

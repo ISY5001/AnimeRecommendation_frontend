@@ -71,6 +71,59 @@ onMounted(async () => {
 const accountStore = useAccountStore();
 
 // Access the account_id
+const fetchAccountID = async () => {
+
+  console.log("fetchaccountID function started");
+  try {
+    console.log("try")
+    // Send a POST request to your Flask backend for user registration
+    const response = await (async() => {
+      return axios.post(`${"http://127.0.0.1:8282"}/get_userid`, {
+        username: username.value,
+        password: password.value,
+      });
+    })();
+
+    if (response.data.msg === "success") {
+      // Store the account_id in local storage
+      router.push("/");
+      console.log('fetching:',response.data);
+      
+
+    } else {
+      console.error("fetch failed:", response.data.error)
+    }
+  } catch (error) {
+    // Handle network errors or other exceptions here
+    console.error("fetch failed:", error);
+  }
+};
+
+/*
+const fetchAccountID = async () => {
+    try {
+      const username = ref(localStorage.getItem("username") ?? "");
+      const password = ref(localStorage.getItem("password") ?? "");
+        console.log('Try fetchaccountid');
+        const u = username.value;
+        const p = password.value;
+        console.log('user:',u);
+        console.log('pass:',p);
+        const response = await axios.get(`${"http://127.0.0.1:8282"}/get_userid?username=${u}&password=${p}`);
+        if (response.status === 200) {
+            console.log('hi:',response.data);
+            return response.data; // The ratings data
+            
+        }
+        // Handle other response statuses if needed
+    } catch (error) {
+        console.error("Error fetching ID:", error);
+    }
+};
+*/
+
+
+
 
 const fetchRatings = async (account_id, anime_id) => {
     try {
@@ -104,6 +157,10 @@ const rateAnimeFunction = async (anime_id, score) => {
         console.error("Error updating rating:", error);
     }
 };
+
+onMounted(async () => {
+    await fetchAccountID();
+});
 
 
 </script>
