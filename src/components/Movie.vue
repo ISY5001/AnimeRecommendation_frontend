@@ -135,15 +135,28 @@ const fetchRatings = async (account_id, anime_id) => {
         console.log(account_id);
         const anime_id = props.movie.Anime_id;
         console.log(anime_id);
+
+        // fetch rating scores
         const response = await axios.get(`${"http://127.0.0.1:8282"}/rating/fetch_ratings/${account_id}/${anime_id}`);
         if (response.status === 200) {
-            return response.data; // The ratings data
+            console.log('response data:', response.data);
+            const score = response.data[0].scores;
+            user_info.setScore(score);
+            console.log('saved score:', user_info.scores);
+
+            user_info.setAnime(anime_id);
+            console.log('saved anime_id:', user_info.anime_id);
+
+            return score; // The ratings data
+            
         }
         // Handle other response statuses if needed
     } catch (error) {
         console.error("Error fetching ratings:", error);
     }
 };
+
+
 
 const rateAnimeFunction = async (anime_id, score) => {
     try {
@@ -161,10 +174,11 @@ const rateAnimeFunction = async (anime_id, score) => {
     }
 };
 
+/*
 onMounted(async () => {
     await fetchAccountID();
 });
-
+*/
 
 </script>
 

@@ -6,6 +6,8 @@ export const userInfoStore = defineStore('infor', {
     account_id: null,
     username: null,
     password: null,
+    anime_id: null,
+    scores: null,
   }),
   actions: {
     setUser(data) {
@@ -18,6 +20,12 @@ export const userInfoStore = defineStore('infor', {
       this.account_id = null;
       this.username = null;
       this.password = null;
+    },
+    setScore(score) {
+      this.scores = score;
+    },
+    setAnime(anime) {
+      this.anime_id = anime;
     },
   },
 })

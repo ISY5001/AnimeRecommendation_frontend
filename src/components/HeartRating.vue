@@ -21,7 +21,47 @@ import emptyHeart from './icons/emptyHeart.vue';
 import fullHeart from './icons/fullHeart.vue';
 import halfHeart from './icons/halfHeart.vue';
 
-const ratings = ref([0, 0, 0, 0, 0]); // Assuming you want 5 hearts initially all empty
+import { userInfoStore } from "../store/userInfo";
+
+const user_info = userInfoStore();
+
+function scoreToHeartArray(anime_id, score) {
+
+  
+
+  if (anime_id==null || score == null){
+    console.log("Not rated")
+    score = 0;
+    const heartArray = [0, 0, 0, 0, 0];
+    return heartArray
+    
+  }else{
+    const heartArray1=[];
+    console.log("anime_id 1:", anime_id)
+    console.log("score 1:", score)
+    const maxHearts = 5;  // you can adjust this if needed
+    let remainingScore = score;
+
+    
+    for (let i = 0; i < maxHearts; i++) {
+      if (remainingScore >= 2) {
+        heartArray1.push(1);
+        remainingScore -= 2;
+      } else if (remainingScore === 1) {
+        heartArray1.push(0.5);
+        remainingScore = 0;
+      } else {
+        heartArray1.push(0);
+      }
+    }
+    return heartArray1;
+  }
+  
+}
+
+
+//const ratings = ref([0, 0, 0, 0, 0]); // Assuming you want 5 hearts initially all empty
+const ratings = ref(scoreToHeartArray(user_info.anime_id, user_info.scores));
 
 const toggleHeart = (index) => {
   if (ratings.value[index] === 0) {
