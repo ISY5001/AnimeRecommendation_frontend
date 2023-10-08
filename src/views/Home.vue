@@ -56,6 +56,7 @@ const handleScroll = (e) => {
   }
 };
 
+const movieMethods = ref(null);
 
 </script>
 
@@ -67,4 +68,6 @@ const handleScroll = (e) => {
     </article>
     <IsLoading v-if="animeStore.isLoading" />
   </main>
-</template>
+</template >
+
+

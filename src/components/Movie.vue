@@ -1,5 +1,5 @@
 <script setup>
-import { watch,ref } from 'vue';
+import { watch,ref,defineProps } from 'vue';
 import { onMounted } from 'vue';
 import CalendarIcon from "./icons/CalendarIcon.vue";
 
@@ -125,7 +125,8 @@ const fetchAccountID = async () => {
 */
 
 
-
+const ratingsFetched = ref(false);
+const unscoredFetched = ref(false);
 
 const fetchRatings = async (account_id, anime_id) => {
     try {
@@ -148,14 +149,21 @@ const fetchRatings = async (account_id, anime_id) => {
             user_info.setAnime(anime_id);
             console.log('saved anime_id:', user_info.anime_id);
 
+            // Once fetching is done:
+            ratingsFetched.value = true;
+
             return score; // The ratings data
+            
             
         }
         // Handle other response statuses if needed
     } catch (error) {
         console.error("Error fetching ratings:", error);
+        unscoredFetched.value = true;
     }
 };
+
+const exposed = ref({ fetchRatings });
 
 
 
@@ -223,7 +231,14 @@ const rateAnimeFunction = async (anime_id, score) => {
     </div>
   </div>
   <!--HeartRating :score="score" @update:modelValue="toggleScore(movie.imdbID, $event)" /-->
-  <HeartRating :modelValue="score" @update:modelValue="toggleScore(movie.Anime_id, $event)" />
+  <!-- HeartRating component will only render if ratingsFetched is true -->
+  <HeartRating 
+    v-if="ratingsFetched || unscoredFetched" 
+    :score="score" 
+    :ratingsFetched="ratingsFetched" 
+    :unscoredFetched="unscoredFetched" 
+  />
+
   
   
 </template>
