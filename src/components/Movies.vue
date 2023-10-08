@@ -7,7 +7,7 @@ const animesStore = useAnimesStore();
 
 // Fetch all movies on component mount
 onMounted(() => {
-  animesStore.getAllMovies();
+  //animesStore.getAllMovies();
 });
 </script>
 
