@@ -1,29 +1,19 @@
 <template>
   <div class="flex">
-    <!-- Scenario 1: Ratings are fetched (for scored anime) -->
-    <template v-if="ratingsFetched">
-      <!-- Loop through hearts and display them -->
-      <div v-for="(rate, index) in ratings" :key="index" class="mr-1">
-        <button @click="toggleHeart(index)">
-          <emptyHeart v-if="rate === 0" />
-          <halfHeart v-if="rate === 0.5" />
-          <fullHeart v-if="rate === 1" />
-        </button>
-      </div>
+    <!-- Loop through hearts and display them -->
+    <div v-for="(rate, index) in ratings" :key="index" class="mr-1">
+      <button @click="toggleHeart(index)">
+        <emptyHeart v-if="rate === 0" />
+        <halfHeart v-if="rate === 0.5" />
+        <fullHeart v-if="rate === 1" />
+      </button>
+    </div>
 
-      <!-- Display the total score -->
-      <div class="ml-4 text-xl font-bold">{{ totalScore }}</div>
-    </template>
-
-    <!-- Scenario 2: Ratings are not fetched (for unscored anime) -->
-    <template v-else-if="unscoredFetched">
-      <!-- Display 5 uncolored heart icons -->
-      <div v-for="n in 5" :key="n" class="mr-1">
-        <emptyHeart />
-      </div>
-    </template>
+    <!-- Display the total score -->
+    <div class="ml-4 text-xl font-bold">{{ totalScore }}</div>
   </div>
 </template>
+
 
 
 <script setup>
@@ -36,13 +26,17 @@ import { userInfoStore } from "../store/userInfo";
 
 const user_info = userInfoStore();
 
-const props = defineProps(['score', 'ratingsFetched', 'unscoredFetched']);
+const props = defineProps(['score', 'ratingsFetched', 'unscoredFetched', 'Anime_id']);
 
-function scoreToHeartArray(anime_id, records) {
+function scoreToHeartArray(anime_id = 0, records = []) {
   // First, find if there's a record for this anime_id
+  console.log('records_animeid:', anime_id);
+  console.log('records:', records);
   const record = records.find(r => r.anime_id === anime_id);
+  console.log('record:', record);
 
   let score = record ? record.scores : null;
+  console.log('record_score:', score);
 
   if (score == null) {
     console.log("Not rated");
@@ -74,7 +68,7 @@ function scoreToHeartArray(anime_id, records) {
 
 
 //const ratings = ref([0, 0, 0, 0, 0]); // Assuming you want 5 hearts initially all empty
-const ratings = ref(scoreToHeartArray(user_info.anime_id, user_info.records));
+const ratings = ref(scoreToHeartArray(props.Anime_id, user_info.records));
 
 const toggleHeart = (index) => {
   if (ratings.value[index] === 0) {
