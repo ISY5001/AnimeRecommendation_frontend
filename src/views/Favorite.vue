@@ -3,8 +3,8 @@ import { onMounted } from "@vue/runtime-core";
 import Movies from "../components/Movies.vue";
 import IsLoading from "../components/IsLoading.vue";
 import axios from "axios";
-import { useScoreStore } from "../store/score"; 
-const store = useScoreStore();
+//import { useScoreStore } from "../store/score"; 
+//const store = useScoreStore();
 
 import { useAnimesStore } from "../store/animes";
 const animeStore = useAnimesStore();
@@ -25,7 +25,6 @@ onMounted(async () => {
     if (response.data) {
       scoredAnimeStore.setScoredAnimes(response.data);
       console.log( "scoredAnimeStore:",scoredAnimeStore)
-
     }
     
   } catch (error) {

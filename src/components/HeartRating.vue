@@ -23,10 +23,10 @@ import fullHeart from './icons/fullHeart.vue';
 import halfHeart from './icons/halfHeart.vue';
 import axios from 'axios';
 import { userInfoStore } from "../store/userInfo";
-import { useScoreStore } from "../store/score";
+//import { useScoreStore } from "../store/score";
+import { useScoredAnimeStore } from '../store/scoredAnime.js';
 
-
-const store = useScoreStore();
+const scoredAnimeStore = useScoredAnimeStore();
 const user_info = userInfoStore();
 
 const props = defineProps(['score', 'ratingsFetched', 'unscoredFetched', 'Anime_id', 'account_id']);
@@ -40,6 +40,7 @@ function scoreToHeartArray(anime_id = 0, records = []) {
 
   let score = record ? record.scores : null;
   console.log('record_score:', score);
+  
 
   if (score == null) {
     console.log("Not rated");
@@ -118,7 +119,8 @@ function uploadScore(score) {
 const totalScore = computed(() => {
   const total_score = ratings.value.reduce((sum, rating) => sum + (rating)*2, 0);
   uploadScore(total_score);
-  store.updateScore(props.Anime_id, total_score);
+  scoredAnimeStore.updateScoredAnime(props.Anime_id, total_score);
+  
   return total_score;
 });
 

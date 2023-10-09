@@ -13,12 +13,14 @@ import axios from 'axios';
 import HeartRating from './HeartRating.vue';
 //const store = useFavoritStore();
 import { computed } from 'vue';
-import { useScoreStore } from "../store/score";
+//import { useScoreStore } from "../store/score";
 import { userInfoStore } from "../store/userInfo";
+import { useScoredAnimeStore } from '../store/scoredAnime.js';
 
-const store = useScoreStore();
+
+//const store = useScoreStore();
 const user_info = userInfoStore();
-
+const scoredAnimeStore = useScoredAnimeStore();
 
 
 
@@ -35,25 +37,27 @@ const title = props.movie.Title.substr(0, 15) + "...";
 
 // Use a computed property to get the score for the current movie from the store.
 const score = computed(() => {
-  const foundMovie = store.scoredMovies.find(movie => movie.Anime_id === props.movie.Anime_id);
+  const foundMovie = scoredAnimeStore.scoredAnimes.find(movie => movie.Anime_id === props.movie.Anime_id);
   return foundMovie ? foundMovie.Score : 0;
 });
 
 
 const toggleScore = (id, newScore) => {
-  const foundMovie = store.scoredMovies.find((movie) => movie.Anime_id == id);
+  const foundMovie = scoredAnimeStore.scoredAnimes.find((movie) => movie.Anime_id == id);
 
   if (foundMovie) {
     if (newScore === 0) {
+      console.log('Newscore=0');
       // If the new score is 0, remove the score
-      store.removeScore(id);
+      scoredAnimeStore.removeScoredAnime(id);
+      scoredAnimeStore.removeZeroScoredAnimes();
     } else if (foundMovie.Score !== newScore) {
       // If the score is different, update the score
-      store.updateScore(id, newScore);
+      scoredAnimeStore.updateScoredAnime(id, newScore);
     } // No need for other conditions as the HeartRating component manages the half and full toggle
   } else if (newScore > 0) {
     // If the movie is not scored and the new score is greater than 0, add the score
-    store.addScore(id, newScore);
+    scoredAnimeStore.setScoredAnimes(id, newScore);
   }
 
   // Now, call the rateAnime method passed from the parent component
@@ -101,8 +105,8 @@ const fetchRatings = async (account_id, anime_id) => {
             // Once fetching is done:
             ratingsFetched.value = true;
 
-            if (!store.scoredMovies.some(movie => movie.Anime_id === anime_id)) {
-            store.addScore(anime_id, score); // adding with default score
+            if (!scoredAnimeStore.scoredAnimes.some(movie => movie.Anime_id === anime_id)) {
+            scoredAnimeStore.addScore(anime_id, score); // adding with default score
             }
 
             return score; // The ratings data
@@ -122,6 +126,13 @@ const exposed = ref({ fetchRatings });
 
 const rateAnimeFunction = async (anime_id, score) => {
     try {
+
+        if (score === 0) {
+      // If the new score is 0, remove the score
+      scoredAnimeStore.removeScoredAnime(anime_id);
+      scoredAnimeStore.removeZeroScoredAnimes();
+        }
+        
         const response = await axios.post(`${"http://127.0.0.1:8282"}/rating/upload_ratings`, {
             anime_id: anime_id,
             score: score
