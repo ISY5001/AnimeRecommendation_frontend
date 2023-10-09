@@ -78,25 +78,27 @@ const toggleHeart = (index) => {
       ratings.value[i] = 1;
     }
     ratings.value[index] = 0.5; // Make the current heart half-filled
-    return;
-  }
-
-  if (ratings.value[index] === 0.5) {
+  } else if (ratings.value[index] === 0.5) {
     // Make all previous hearts and the current one full
     for (let i = 0; i <= index; i++) {
       ratings.value[i] = 1;
     }
-    return;
-  }
-
-  if (ratings.value[index] === 1) {
+  } else if (ratings.value[index] === 1) {
     // Make the current heart and all subsequent hearts empty
     for (let i = index; i < ratings.value.length; i++) {
       ratings.value[i] = 0;
     }
-    return;
+  }
+
+  // Always check if the total score after toggling is zero
+  const currentTotalScore = ratings.value.reduce((sum, rating) => sum + (rating) * 2, 0);
+  if (currentTotalScore === 0) {
+    console.log('score=0');
+    // If the score is zero, remove the anime from the scoredAnime store
+    scoredAnimeStore.removeScoredAnime(props.Anime_id);
   }
 };
+
 
 
 function uploadScore(score) {
