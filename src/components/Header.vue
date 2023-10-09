@@ -35,7 +35,7 @@
     </nav>
 
   <div id="app">
-    <FloatingChatbot />
+    <!--FloatingChatbot /-->
     <!-- 其他内容 -->
   </div>
 
@@ -47,7 +47,7 @@
 
 <script setup>
 import Search from "./Search.vue";
-import ChatBotIcon from "./icons/ChatBotIcon.vue";
+//import ChatBotIcon from "./icons/ChatBotIcon.vue";
 import HeartIcon from "./icons/HeartIcon.vue";
 import StarIcon from "./icons/StarIcon.vue";
 import { ref, reactive } from 'vue';

@@ -74,57 +74,6 @@ onMounted(async () => {
 });
 
 
-// Access the account_id
-/*const fetchAccountID = async () => {
-
-  console.log("fetchaccountID function started");
-  try {
-    
-    // Send a POST request to your Flask backend for user registration
-    const response = await (async() => {
-      return axios.post(`${"http://127.0.0.1:8282"}/get_userid`);
-    })();
-    console.log(response);
-
-    if (response.data.msg === "success") {
-      // Store the account_id in local storage
-      router.push("/");
-      console.log('fetching:',response.data);
-      
-
-    } else {
-      console.error("fetch failed:", response.data.error)
-    }
-  } catch (error) {
-    // Handle network errors or other exceptions here
-    console.error("fetch failed:", error);
-  }
-};
-*/
-/*
-const fetchAccountID = async () => {
-    try {
-      const username = ref(localStorage.getItem("username") ?? "");
-      const password = ref(localStorage.getItem("password") ?? "");
-        console.log('Try fetchaccountid');
-        const u = username.value;
-        const p = password.value;
-        console.log('user:',u);
-        console.log('pass:',p);
-        const response = await axios.get(`${"http://127.0.0.1:8282"}/get_userid?username=${u}&password=${p}`);
-        if (response.status === 200) {
-            console.log('hi:',response.data);
-            return response.data; // The ratings data
-            
-        }
-        // Handle other response statuses if needed
-    } catch (error) {
-        console.error("Error fetching ID:", error);
-    }
-};
-*/
-
-
 const ratingsFetched = ref(false);
 const unscoredFetched = ref(false);
 
@@ -151,6 +100,10 @@ const fetchRatings = async (account_id, anime_id) => {
 
             // Once fetching is done:
             ratingsFetched.value = true;
+
+            if (!store.scoredMovies.some(movie => movie.Anime_id === anime_id)) {
+            store.addScore(anime_id, score); // adding with default score
+            }
 
             return score; // The ratings data
             
@@ -224,7 +177,7 @@ const rateAnimeFunction = async (anime_id, score) => {
     </div>
     <div class="text-gray-200 flex mt-3 items-center font-medium text-sm">
       <CalendarIcon />
-      <ChatBot />
+      <!--ChatBot /-->
       {{ movie.Year }}
 
 
@@ -239,6 +192,7 @@ const rateAnimeFunction = async (anime_id, score) => {
     :unscoredFetched="unscoredFetched" 
     :Anime_id="props.movie.Anime_id"
     :account_id="user_info.account_id"
+    
   />
 
   

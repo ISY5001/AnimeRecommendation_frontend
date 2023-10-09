@@ -23,7 +23,10 @@ import fullHeart from './icons/fullHeart.vue';
 import halfHeart from './icons/halfHeart.vue';
 import axios from 'axios';
 import { userInfoStore } from "../store/userInfo";
+import { useScoreStore } from "../store/score";
 
+
+const store = useScoreStore();
 const user_info = userInfoStore();
 
 const props = defineProps(['score', 'ratingsFetched', 'unscoredFetched', 'Anime_id', 'account_id']);
@@ -113,8 +116,9 @@ function uploadScore(score) {
 
 // Calculate the total score based on the ratings array
 const totalScore = computed(() => {
-  const total_score = ratings.value.reduce((sum, rating) => sum + (rating)*2, 0)
-  uploadScore(total_score)
+  const total_score = ratings.value.reduce((sum, rating) => sum + (rating)*2, 0);
+  uploadScore(total_score);
+  store.updateScore(props.Anime_id, total_score);
   return total_score;
 });
 
