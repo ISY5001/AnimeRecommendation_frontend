@@ -238,6 +238,7 @@ const rateAnimeFunction = async (anime_id, score) => {
     :ratingsFetched="ratingsFetched" 
     :unscoredFetched="unscoredFetched" 
     :Anime_id="props.movie.Anime_id"
+    :account_id="user_info.account_id"
   />
 
   

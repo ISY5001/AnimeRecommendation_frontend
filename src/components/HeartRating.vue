@@ -21,12 +21,12 @@ import { ref, reactive, computed, defineProps } from 'vue';
 import emptyHeart from './icons/emptyHeart.vue';
 import fullHeart from './icons/fullHeart.vue';
 import halfHeart from './icons/halfHeart.vue';
-
+import axios from 'axios';
 import { userInfoStore } from "../store/userInfo";
 
 const user_info = userInfoStore();
 
-const props = defineProps(['score', 'ratingsFetched', 'unscoredFetched', 'Anime_id']);
+const props = defineProps(['score', 'ratingsFetched', 'unscoredFetched', 'Anime_id', 'account_id']);
 
 function scoreToHeartArray(anime_id = 0, records = []) {
   // First, find if there's a record for this anime_id
@@ -65,9 +65,6 @@ function scoreToHeartArray(anime_id = 0, records = []) {
   }
 }
 
-
-
-//const ratings = ref([0, 0, 0, 0, 0]); // Assuming you want 5 hearts initially all empty
 const ratings = ref(scoreToHeartArray(props.Anime_id, user_info.records));
 
 const toggleHeart = (index) => {
@@ -97,12 +94,29 @@ const toggleHeart = (index) => {
   }
 };
 
+
+function uploadScore(score) {
+  const upload_score = {
+    account_id: props.account_id,
+    anime_id: props.Anime_id,
+    scores: score,
+  };
+
+  axios.post(`${"http://127.0.0.1:8282"}/rating/upload_ratings`, upload_score)
+    .then(response => {
+      console.log('uploading score:',response.data.msg); // Display success message
+    })
+    .catch(error => {
+      console.error('Error uploading score:', error);
+    });
+}
+
 // Calculate the total score based on the ratings array
 const totalScore = computed(() => {
-  return ratings.value.reduce((sum, rating) => sum + (rating)*2, 0);
+  const total_score = ratings.value.reduce((sum, rating) => sum + (rating)*2, 0)
+  uploadScore(total_score)
+  return total_score;
 });
-
-
 
 
 </script>
