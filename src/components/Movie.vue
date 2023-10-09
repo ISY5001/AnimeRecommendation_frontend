@@ -57,7 +57,7 @@ const toggleScore = (id, newScore) => {
     } // No need for other conditions as the HeartRating component manages the half and full toggle
   } else if (newScore > 0) {
     // If the movie is not scored and the new score is greater than 0, add the score
-    scoredAnimeStore.setScoredAnimes(id, newScore);
+    scoredAnimeStore.updateScoredAnime(id, newScore);
   }
 
   // Now, call the rateAnime method passed from the parent component
@@ -106,7 +106,7 @@ const fetchRatings = async (account_id, anime_id) => {
             ratingsFetched.value = true;
 
             if (!scoredAnimeStore.scoredAnimes.some(movie => movie.Anime_id === anime_id)) {
-            scoredAnimeStore.addScore(anime_id, score); // adding with default score
+            scoredAnimeStore.updateScoredAnime(anime_id, score); // adding with default score
             }
 
             return score; // The ratings data

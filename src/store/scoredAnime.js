@@ -14,6 +14,8 @@ export function useScoredAnimeStore() {
       localStorage.setItem("scoredAnimes", JSON.stringify(state.scoredAnimes));
     },
     updateScoredAnime(anime_id, newScore) {
+
+      if (Array.isArray(state.scoredAnimes)) {
         const anime = state.scoredAnimes.find(a => a.Anime_id === anime_id);
         if (anime) {
           anime.score = newScore; 
@@ -22,6 +24,11 @@ export function useScoredAnimeStore() {
             console.log("Current scored animes:", state.scoredAnimes);
             console.log("Type of anime_id:", typeof anime_id, ", Value:", anime_id);
         }
+    } else {
+        console.error('state.scoredAnimes is not an array:', state.scoredAnimes);
+    }
+    
+        
       },
     removeScoredAnime(anime_id) {
       const index = state.scoredAnimes.findIndex(a => a.Anime_id === anime_id);
