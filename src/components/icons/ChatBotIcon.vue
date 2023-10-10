@@ -1,4 +1,4 @@
-<!--template>
+<template>
     <div class="chatbot-icon" @click="openChatbot">
       <svg
         width="50"
@@ -16,9 +16,9 @@
         </g>
       </svg>
     </div>
-  </template-->
+  </template>
   
-  <!--script>
+  <script>
   export default {
     methods: {
       openChatbot() {
@@ -27,9 +27,9 @@
       },
     },
   };
-  </script-->
+  </script>
   
-  <!--style scoped>
+  <style scoped>
   .chatbot-icon {
     position: fixed;
     right: 20px;
@@ -37,5 +37,5 @@
     cursor: pointer;
     z-index: 1000;
   }
-  </style-->
+  </style>
   

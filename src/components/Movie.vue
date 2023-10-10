@@ -188,7 +188,7 @@ const rateAnimeFunction = async (anime_id, score) => {
     </div>
     <div class="text-gray-200 flex mt-3 items-center font-medium text-sm">
       <CalendarIcon />
-      <!--ChatBot /-->
+      <ChatBot />
       {{ movie.Year }}
 
 

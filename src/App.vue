@@ -14,13 +14,13 @@
       </transition>
     </router-view>
     <!-- Adding Floating Chatbot Icon -->
-    <!--FloatingChatbot /-->
+    <FloatingChatbot />
   </div>
 </template>
 
 <script setup>
 import Header from './components/Header.vue';
-//import FloatingChatbot from './components/FloatingChatbot.vue';  // Import the FloatingChatbot component
+import FloatingChatbot from './components/FloatingChatbot.vue';  // Import the FloatingChatbot component
 </script>
 
 <style>
