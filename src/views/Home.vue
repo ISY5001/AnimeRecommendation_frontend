@@ -28,7 +28,7 @@ setTimeout(() => {
   // totalPage = Math.ceil(store.totalResults * 10);
 
 }, 1000);
-alert(totalPage);
+// alert(totalPage);
 // register a listener to the DOM, which can fetch more animes data
 // when user scroll to the bottem of page.
 onMounted(() => {

@@ -20,7 +20,7 @@
 <script setup>
 import { ref } from "@vue/runtime-core";
 import { useRouter } from "vue-router";
-import { setUsername } from '../store/userState.js'; // Adjust the path as needed
+import { setUsername, userState } from '../store/userState.js'; // Adjust the path as needed
 
 import axios from "axios";
 
@@ -46,6 +46,8 @@ const loginUser = async () => {
     console.log(response.data.msg)
     if (response.data.msg === "success") {
       setUsername(username.value);
+      alert("set username successed!" + userState.username);
+      
       router.push("/");
     } else {
       console.error("Login failed:", response.data.error)
