@@ -30,10 +30,11 @@ export const useAnimesStore = defineStore("animes", {
       try {
         // const { data } = await axios.get(`${API_URL}?apikey=${API_KEY}&s=${keyword}`);
         const { data } = await axios.get(`${BACK_END}fetchAnimes`);
-        // alert(JSON.stringify(data, null, 2)); // success
+        alert(JSON.stringify(data, null, 2)); // success
         if (data.Response == "False") {
           throw new Error(data.Error);
         }
+        alert(data.totalResults);
         [this.totalResults, this.Animes, this.isLoading, this.page] = [data.totalResults, data.Search, false, 1];
       } catch (err) {
         [this.isLoading, this.loadingMessage] = [true, err.message];

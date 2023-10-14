@@ -12,7 +12,7 @@ export const useRecAnimesStore = defineStore("recanimes", {
       RecAnimes: [],
       recanime: {},
       isLoading: false,
-      totalResults: 0,
+      totalRecResults: 0,
       loadingMessage: "Please wait",
       page: 1,
     };
@@ -34,10 +34,13 @@ export const useRecAnimesStore = defineStore("recanimes", {
         // http://127.0.0.1:8282/recommend\?username\=chenzhiwei
         // urls like above works
         // alert(JSON.stringify(data, null, 2)); // success
+        alert(data);
         if (data.Response == "False") {
           throw new Error(data.Error);
         }
-        [this.totalResults, this.RecAnimes, this.isLoading, this.page] = [data.totalResults, data.Search, false, 1];
+        alert(data.totalResults);
+        [this.totalRecResults, this.RecAnimes, this.isLoading, this.page] = [data.totalResults, data.Search, false, 1];
+       
       } catch (err) {
         [this.isLoading, this.loadingMessage] = [true, err.message];
       }
