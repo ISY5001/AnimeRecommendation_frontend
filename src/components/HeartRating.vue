@@ -1,11 +1,12 @@
 <template>
-  <div class="flex">
-    <!-- Loop through hearts and display them -->
-    <div v-for="(rate, index) in ratings" :key="index" class="mr-1">
-      <button @click="toggleHeart(index)">
-        <emptyHeart v-if="rate === 0" />
-        <halfHeart v-if="rate === 0.5" />
-        <fullHeart v-if="rate === 1" />
+    <div class="flex">
+      <button
+        v-for="heart in 5"
+        :key="heart"
+        :class="{ 'text-red-600': heart <= rating, 'text-gray-400': heart > rating }"
+        @click="setRating(heart)"
+      >
+        <HeartIcon />
       </button>
     </div>
 
