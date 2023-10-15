@@ -33,7 +33,12 @@
 import { ref } from "@vue/runtime-core";
 import { useRouter } from "vue-router";
 import axios from "axios";
+import { defineStore } from 'pinia';
+import { userInfoStore } from "../store/userInfo";
 
+const user_info = userInfoStore();
+
+//const accountStore = useAccountStore();
 const username = ref(localStorage.getItem("username") ?? "");
 const password = ref(localStorage.getItem("password") ?? "");
 const router = useRouter();
@@ -55,7 +60,14 @@ const loginUser = async () => {
     })();
     console.log(response.data.msg)
     if (response.data.msg === "success") {
+      // Store the account_id in local storage
       router.push("/");
+      // Store the user info in the store
+      user_info.setUser(response.data);
+      console.log('data:',response.data);
+
+      console.log(user_info.account_id, user_info.username);
+
     } else {
       console.error("Login failed:", response.data.error)
     }
@@ -64,7 +76,12 @@ const loginUser = async () => {
     console.error("Login failed:", error);
   }
 };
+
+
+
+
 </script>
+
   
 <style scoped>
 .register {

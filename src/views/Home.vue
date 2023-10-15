@@ -56,15 +56,18 @@ const handleScroll = (e) => {
   }
 };
 
+const movieMethods = ref(null);
+
 </script>
 
 <template>
   <main>
     <Search />
-
     <article ref="scrollComponent">
-      <Movies :movies="animeStore.movies" />
+      <Movies :movies="animeStore.movies" :fetchRatings="fetchRatings" />
     </article>
     <IsLoading v-if="animeStore.isLoading" />
   </main>
-</template>
+</template >
+
+
