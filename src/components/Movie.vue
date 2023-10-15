@@ -31,7 +31,7 @@ const props = defineProps({
   fetchRatings: Function,
 });
 
-
+//Substry?
 const title = props.movie.Title.substr(0, 15) + "...";
 
 
