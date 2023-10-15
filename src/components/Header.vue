@@ -9,6 +9,12 @@
       <!-- Navigation links -->
       <ul class="flex space-x-4">
         <li>
+          <router-link to="/unv" class="flex text-green-600 items-center cursor-pointer">
+            <AIcon />
+            <span class="text-lg tracking-wide md:text-xl">AniVerse</span>
+          </router-link>
+        </li>
+        <li>
           <router-link to="/fav" class="flex text-red-600 items-center cursor-pointer">
             <HeartIcon />
             <span class="text-lg tracking-wide md:text-xl">Scored Animes</span>
@@ -50,6 +56,7 @@ import Search from "./Search.vue";
 import ChatBotIcon from "./icons/ChatBotIcon.vue";
 import HeartIcon from "./icons/HeartIcon.vue";
 import StarIcon from "./icons/StarIcon.vue";
+import AIcon from "./icons/AIcon.vue";
 import { ref, reactive } from 'vue';
 
 const showUserDropdown = ref(false);
