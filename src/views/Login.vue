@@ -58,14 +58,17 @@ const loginUser = async () => {
         password: password.value,
       });
     })();
-    console.log(response.data.msg)
+    // console.log(response.data.msg)
     if (response.data.msg === "success") {
-      // Store the account_id in local storage
+      // 存储登录状态到sessionStorage
+      sessionStorage.setItem("isLoggedIn", "true");
+      // Store the account_id into the sessionStorage
+      user_info.setUser(response.data);
+      // 存储用户的account_id
       router.push("/");
       // Store the user info in the store
       user_info.setUser(response.data);
       console.log('data:',response.data);
-
       console.log(user_info.account_id, user_info.username);
 
     } else {

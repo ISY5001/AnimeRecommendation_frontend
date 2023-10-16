@@ -28,10 +28,10 @@
           </div>
           <!-- Dropdown menu for User -->
           <transition name="fade">
-            <div v-if="showUserDropdown" class="absolute top-10 right-0 bg-white p-2 space-y-2 shadow-md rounded-lg" @mouseenter="cancelHideTimer" @mouseleave="startHideTimer">
+            <div v-if="showUserDropdown" class="absolute top-10 right-0 bg-white p-2 space-y-2 shadow-md rounded-lg" @mouseleave="startHideTimer">
+              <a href="#" class="block" @click="showLogoutConfirmation = true">Logout</a>
               <router-link to="/login" class="block">Login</router-link>
               <router-link to="/register" class="block">Register</router-link>
-              <router-link to="/logout" class="block">Logout</router-link>
             </div>
           </transition>
         </li>
@@ -40,14 +40,23 @@
       </ul>
     </nav>
 
-  <div id="app">
-    <FloatingChatbot />
-    <!-- 其他内容 -->
-  </div>
+    <div id="app">
+      <FloatingChatbot />
+      <!-- 其他内容 -->
+    </div>
 
     <p class="mt-6 mb-7 text-gray-200 text-xs font-light tracking-wide md:text-lg md:tracking-wider lg:text-sm">
       You can search any movies on this website
     </p>
+
+    <!-- Confirmation dialog for logout -->
+    <div v-if="showLogoutConfirmation" class="absolute top-20 right-5 bg-white p-4 shadow-md rounded-lg" @mouseleave="startHideTimer">
+      <p>Are you sure you want to logout?</p>
+      <div class="flex justify-end space-x-2">
+        <button @click="logout" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Yes</button>
+        <button @click="cancelLogout" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">No</button>
+      </div>
+    </div>
   </header>
 </template>
 
@@ -59,13 +68,16 @@ import StarIcon from "./icons/StarIcon.vue";
 import AIcon from "./icons/AIcon.vue";
 import { ref, reactive } from 'vue';
 
+import { useRouter } from "vue-router";
+const router = useRouter();
+
 const showUserDropdown = ref(false);
 const hideTimer = ref(null);
 
 const hideUserDropdown = () => {
   hideTimer.value = setTimeout(() => {
     showUserDropdown.value = false;
-  }, 500); // Adjust the delay as needed (in milliseconds)
+  }, 2000); // Adjust the delay as needed (in milliseconds)
 };
 
 const startHideTimer = () => {
@@ -75,6 +87,22 @@ const startHideTimer = () => {
 const cancelHideTimer = () => {
   clearTimeout(hideTimer.value);
 };
+
+const logout = () => {
+  // 在此处理注销逻辑
+  // 将sessionStorage中的登录状态设为false
+  console.log("user click logout")
+  sessionStorage.setItem("isLoggedIn", "false");
+  showLogoutConfirmation.value = false; // 关闭对话框
+  router.push('/login');
+};
+
+const cancelLogout = () => {
+  showLogoutConfirmation.value = false; // 关闭对话框
+};
+
+const showLogoutConfirmation = ref(false);
+
 </script>
 
 <style scoped>

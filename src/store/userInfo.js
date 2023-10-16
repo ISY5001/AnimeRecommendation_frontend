@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 
+// 设置全局状态变量userInfoStore
 export const userInfoStore = defineStore('infor', {
   state: () => ({
     account_id: null,
