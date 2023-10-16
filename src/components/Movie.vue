@@ -2,8 +2,6 @@
 import { watch,ref,defineProps } from 'vue';
 import { onMounted } from 'vue';
 import CalendarIcon from "./icons/CalendarIcon.vue";
-import HeartIcon from "./icons/HeartIcon.vue";
-import { useFavoritStore } from "../store/favorit";
 
 //import HeartIcon from "./icons/HeartIcon.vue";
 import emptyHeart from './icons/emptyHeart.vue';
@@ -24,7 +22,7 @@ import { useScoredAnimeStore } from '../store/scoredAnime.js';
 const user_info = userInfoStore();
 const scoredAnimeStore = useScoredAnimeStore();
 
-const store = useFavoritStore();
+
 
 const props = defineProps({
   movie: Object,
@@ -35,6 +33,7 @@ const props = defineProps({
 
 //Substry?
 const title = props.movie.Title.substr(0, 15) + "...";
+
 
 // Use a computed property to get the score for the current movie from the store.
 const score = computed(() => {
@@ -149,6 +148,7 @@ const rateAnimeFunction = async (anime_id, score) => {
 };
 
 
+
 </script>
 
 
@@ -182,6 +182,9 @@ const rateAnimeFunction = async (anime_id, score) => {
           {{ title }}
         </h3>
       </router-link>
+
+      
+      
     </div>
     <div class="text-gray-200 flex mt-3 items-center font-medium text-sm">
       <CalendarIcon />
@@ -203,5 +206,6 @@ const rateAnimeFunction = async (anime_id, score) => {
     
   />
 
+  
   
 </template>

@@ -70,4 +70,3 @@ const movieMethods = ref(null);
   </main>
 </template >
 
-
