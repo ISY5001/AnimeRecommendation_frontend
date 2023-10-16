@@ -31,7 +31,9 @@ const props = defineProps({
   fetchRatings: Function,
 });
 
-//Substry?
+console.log(props.movie)
+
+// Substry?
 const title = props.movie.Title.substr(0, 15) + "...";
 
 
@@ -67,7 +69,7 @@ const toggleScore = (id, newScore) => {
 const updateMovieScore = (newScore) => {
       useScoreStore().updateScore(movieId.value, newScore);
       movieScore.value = newScore;
-    };
+};
 
 onMounted(async () => {
   console.log('Movie.vue component mounted.');
@@ -126,7 +128,6 @@ const exposed = ref({ fetchRatings });
 
 const rateAnimeFunction = async (anime_id, score) => {
     try {
-
         if (score === 0) {
       // If the new score is 0, remove the score
       scoredAnimeStore.removeScoredAnime(anime_id);
@@ -162,7 +163,7 @@ const rateAnimeFunction = async (anime_id, score) => {
         <img
           :src="movie.Poster"
           class="w-full h-full aspect-auto md:object-cover lg:aspect-auto"
-          :alt="movie.Title"
+          :alt="xxx"
         />
       </div>
       <div v-else>
@@ -172,7 +173,7 @@ const rateAnimeFunction = async (anime_id, score) => {
           :alt="movie.Title"
         />
       </div>
-    </router-link>
+    </router-link> -->
   </div>
 
   <div class="mt-4 w-full">
