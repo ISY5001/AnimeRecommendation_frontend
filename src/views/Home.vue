@@ -34,6 +34,7 @@ setTimeout(() => {
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
   store.getAllAnimes(keyword.value);
+  alert("store.Animes, " + JSON.stringify(store.Animes, null, 2));
 });
 
 const handleScroll = (e) => {

@@ -29,37 +29,36 @@ export const useRecAnimesStore = defineStore("recanimes", {
 
       try {
         // const { data } = await axios.get(`${API_URL}?apikey=${API_KEY}&s=${keyword}`);
-        // alert(BACK_END + "recommend?username=" + userState.username); // worked
         const { data } = await axios.get(`${BACK_END}recommend?username=${userState.username}`); // worked
         // http://127.0.0.1:8282/recommend\?username\=chenzhiwei
-        // urls like above works
-        // alert(JSON.stringify(data, null, 2)); // success
-        alert(data);
+        const formatted_data = JSON.parse(unformated_data);
+        alert("formatted_data in recommend.js " + JSON.stringify(formatted_data, null, 2)); // strange output
+
         if (data.Response == "False") {
           throw new Error(data.Error);
         }
-        alert(data.totalResults);
+        alert("data.totalResults in recommend.js " + data.totalResults); // undefined
         [this.totalRecResults, this.RecAnimes, this.isLoading, this.page] = [data.totalResults, data.Search, false, 1];
        
       } catch (err) {
         [this.isLoading, this.loadingMessage] = [true, err.message];
       }
     },
-    async nextPage(page) {
-      // alert("calling nextPage..");
-      const keyword = localStorage.getItem("keyword") ? localStorage.getItem("keyword") : "One Piece";
-      this.isLoading = true;
-      this.loadingMessage = "Please wait";
-      try {
-        // const { data } = await axios.get(`${API_URL}?apikey=${API_KEY}&s=${keyword}&page=${page}`);
-        const { data } = await axios.get(`${BACK_END}recommend?username==${userState.username}`);
-        if (data.Response == "False") {
-          throw new Error(data.Error);
-        }
-        this.isLoading = false;
-        data.Search.forEach(recanime => this.RecAnimes.push(recanime));
-      } catch (error) {}
-    },
+    // async nextPage(page) {
+    //   // alert("calling nextPage..");
+    //   const keyword = localStorage.getItem("keyword") ? localStorage.getItem("keyword") : "One Piece";
+    //   this.isLoading = true;
+    //   this.loadingMessage = "Please wait";
+    //   try {
+    //     // const { data } = await axios.get(`${API_URL}?apikey=${API_KEY}&s=${keyword}&page=${page}`);
+    //     const { data } = await axios.get(`${BACK_END}recommend?username=${userState.username}`);
+    //     if (data.Response == "False") {
+    //       throw new Error(data.Error);
+    //     }
+    //     this.isLoading = false;
+    //     data.Search.forEach(recanime => this.RecAnimes.push(recanime));
+    //   } catch (error) {}
+    // },
     // to do
     // async getanimeByID(id) {
     //   this.isLoading = true;

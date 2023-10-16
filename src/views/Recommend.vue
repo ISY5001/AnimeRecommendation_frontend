@@ -4,7 +4,7 @@ import Animes from "../components/Animes.vue";
 import Search from "../components/Search.vue";
 import IsLoading from "../components/IsLoading.vue";
 import { useRecAnimesStore } from "../store/recommend";
-// alert("Home.vue loaded");
+alert("Recommend.vue loaded");
 const store = useRecAnimesStore();
 
 // define some reatcive variables using ref function, which used to 
@@ -34,6 +34,7 @@ setTimeout(() => {
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
   store.getRecAnimes(keyword.value);
+  alert("store.RecAnimes, " + JSON.stringify(store.RecAnimes, null, 2)); // 是空白 []
 });
 
 const handleScroll = (e) => {
