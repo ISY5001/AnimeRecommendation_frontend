@@ -182,10 +182,6 @@ const rateAnimeFunction = async (anime_id, score) => {
           {{ title }}
         </h3>
       </router-link>
-
-      <button class="cursor-pointer" @click="toggleFav(movie.imdbID, $event)">
-        <HeartIcon :class="{ 'text-red-600': isFav(movie.imdbID) }" />
-      </button>
     </div>
     <div class="text-gray-200 flex mt-3 items-center font-medium text-sm">
       <CalendarIcon />

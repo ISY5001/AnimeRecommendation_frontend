@@ -12,7 +12,6 @@
 
     <!-- Display the total score -->
     <div class="ml-4 text-xl font-bold">{{ totalScore }}</div>
-  </div>
 </template>
 
 
