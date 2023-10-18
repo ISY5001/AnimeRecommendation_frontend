@@ -64,7 +64,8 @@ const movieMethods = ref(null);
   <main>
     <Search />
     <article ref="scrollComponent">
-      <Movies :movies="animeStore.movies" :fetchRatings="fetchRatings" />
+      <Movies :movies="animeStore.movies"  />
+      <!-- <Movies :movies="animeStore.movies" :fetchRatings="fetchRatings" /> -->
     </article>
     <IsLoading v-if="animeStore.isLoading" />
   </main>

@@ -10,7 +10,7 @@ import halfHeart from './icons/halfHeart.vue';
 import axios from 'axios';
 
 //import { useFavoritStore } from "../store/favorit";
-import HeartRating from './HeartRating.vue';
+// import HeartRating from './HeartRating.vue';
 //const store = useFavoritStore();
 import { computed } from 'vue';
 //import { useScoreStore } from "../store/score";
@@ -34,7 +34,7 @@ const props = defineProps({
 //Substry?
 const title = props.movie.Title.substr(0, 15) + "...";
 
-
+/*
 // Use a computed property to get the score for the current movie from the store.
 const score = computed(() => {
   const foundMovie = scoredAnimeStore.scoredAnimes.find(movie => movie.Anime_id === props.movie.Anime_id);
@@ -147,7 +147,7 @@ const rateAnimeFunction = async (anime_id, score) => {
     }
 };
 
-
+*/
 
 </script>
 
@@ -196,7 +196,7 @@ const rateAnimeFunction = async (anime_id, score) => {
   </div>
   <!--HeartRating :score="score" @update:modelValue="toggleScore(movie.imdbID, $event)" /-->
   <!-- HeartRating component will only render if ratingsFetched is true -->
-  <HeartRating 
+  <!-- <HeartRating 
     v-if="ratingsFetched || unscoredFetched" 
     :score="score" 
     :ratingsFetched="ratingsFetched" 
@@ -204,7 +204,7 @@ const rateAnimeFunction = async (anime_id, score) => {
     :Anime_id="props.movie.Anime_id"
     :account_id="user_info.account_id"
     
-  />
+  /> -->
 
   
   
