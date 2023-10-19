@@ -178,7 +178,7 @@ const rateAnimeFunction = async (anime_id, score) => {
 
   <div class="mt-4 w-full">
     <div class="text-red-200 flex items-center justify-between">
-      <router-link :to="{ name: 'Details', params: { id: movie.Anime_id } }">
+      <router-link :to="{ name: 'Details', params: { id: movie.soup } }">
         <h3 class="font-medium text-md tracking-wide" :title="movie.Title">
           {{ title }}
         </h3>

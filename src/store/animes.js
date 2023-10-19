@@ -7,22 +7,31 @@ import { defineStore } from "pinia";
 
 
 export const useAnimesStore = defineStore("movies", {
+        console.log('page number:',this.page);
+        try {
+            const { data } = await axios.get(`http://127.0.0.1:8282/anime?page=${this.page}`);
+            // alert("data.totalResults from animes.js" +  data.totalResults);
+            
+            this.totalResults = data.totalResults;
+            
+            // if (data.msg && data.msg === "No anime found!") {
+            //     throw new Error("No anime found!");
+            // }
+            
+            this.movies = data.animes; // Replace the existing list of movies
+            this.isLoading = false;
 
-    // state function defines the intial state of the movies store
-    state: () => {
-        return {
-        movies: [],
-        movie: {},
-        isLoading: false,
-        totalResults: 0,
-        loadingMessage: "Please wait",
-        page: 1,
-        };
+        } catch (err) {
+            [this.isLoading, this.loadingMessage] = [true, err.message];
+            alert(err.message);
+        }
     },
-    // actions object defines methods that can be used to interact with and modify
-    // the store's state
-    actions: {
-        async getAllMovies() {
+    async nextPage() {
+        
+        //this.page += 1;  // Increment the page number
+        console.log('next page number:',this.page);
+
+        try {
             this.isLoading = true;
             this.loadingMessage = "Please wait";
             console.log('page number:',this.page)
