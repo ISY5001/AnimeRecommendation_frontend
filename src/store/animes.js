@@ -21,6 +21,31 @@ export const useAnimesStore = defineStore("movies", {
   // actions object defines methods that can be used to interact with and modify
   // the store's state
   actions: {
+    async getRecommendByMovieID(id) {
+      this.isLoading = true;
+      this.loadingMessage = "Please wait";
+      try {
+        // alert("Geting All Movies recommended...")
+        // alert(posted_username);
+        const { data } = await axios.get(`http://127.0.0.1:8282/recommend?animeid=${id}`);
+        // alert("data.totalResults from animes.js" +  data.totalResults + "posted " + posted_username);
+        // alert(data);
+        // alert(data.totalResults);
+        this.totalResults = data.totalResults;
+
+        // if (data.msg && data.msg === "No anime found!") {
+        //     throw new Error("No anime found!");
+        // }
+        // alert(JSON.stringify(data.animes, null, 2));
+        this.movies = data.animes; // Replace the existing list of movies
+        this.isLoading = false;
+
+      } catch (err) {
+        alert(err);
+        [this.isLoading, this.loadingMessage] = [true, err.message];
+      }
+    },
+
     async getMovieByID(id) {
       this.isLoading = true;
       this.loadingMessage = "Please wait";

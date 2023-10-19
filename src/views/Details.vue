@@ -22,12 +22,19 @@ const props = defineProps({
 const films = ref([]);
 
 watchEffect(() => {
-  films.value = animeStore.movies.filter((movie) => movie.Anime_id != props.id);
+  // films.value = animeStore.movies.filter((movie) => movie.Anime_id != props.id);
+  animeStore.getRecommendByMovieID(props.id);
+  films.value = animeStore.movies;
+  // alert(JSON.stringify(films.value, null, 2)); // 
+  // alert(Object.keys(films.value).length ); // == 9
   animeStore.getMovieByID(props.id);
 });
 
 onMounted(() => {
+  animeStore.getRecommendByMovieID(props.id);
+  films.value = animeStore.movies;
   animeStore.getMovieByID(props.id);
+
 });
 
 const toggleFav = (id, e) => {
