@@ -27,8 +27,6 @@ const favMovies = ref(
 let totalPage = 0;
 setTimeout(() => {
   totalPage = Math.ceil(animeStore.totalResults / 10);
-  console.log("Total Results:", animeStore.totalResults);
-  console.log("Calculated Total Pages:", totalPage);
 }, 1000);
 
 // register a listener to the DOM, which can fetch more movies data

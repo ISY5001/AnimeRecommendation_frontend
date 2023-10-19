@@ -13,18 +13,9 @@ const scoredAnimeStore = useScoredAnimeStore();// store
 const animeStore = useAnimesStore();// moviesStore
 const user_info = userInfoStore();
 
-console.log(scoredAnimeStore.scoredAnimes)
-console.log(animeStore);
-
-// onMounted(async () => {
-//   if(scoredAnimeStore.scoredAnime.length < 1){
-//     animeStore.isLoading = true;
-//     animeStore.loadingMessage = "Empty";
-//   }
-// });
-
 onMounted(async () => {
   try {
+    console.log(user_info);
     const response = await axios.get(`${"http://127.0.0.1:8282"}/nonzero_rating/${user_info.account_id}`);
     if (response.data) {
       scoredAnimeStore.setScoredAnimes(response.data);
@@ -35,7 +26,12 @@ onMounted(async () => {
   }
 });
 
-console.log(scoredAnimeStore.scoredAnimes)
+onMounted(async () => {
+  if(scoredAnimeStore.scoredAnimes.length < 1){
+    animeStore.isLoading = true;
+    animeStore.loadingMessage = "Empty";
+  }
+});
 
 </script>
 

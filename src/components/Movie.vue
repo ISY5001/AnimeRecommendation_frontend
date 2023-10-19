@@ -31,8 +31,6 @@ const props = defineProps({
   fetchRatings: Function,
 });
 
-console.log(props.movie)
-
 // Substry?
 const title = props.movie.Title.substr(0, 15) + "...";
 
@@ -49,7 +47,6 @@ const toggleScore = (id, newScore) => {
 
   if (foundMovie) {
     if (newScore === 0) {
-      console.log('Newscore=0');
       // If the new score is 0, remove the score
       scoredAnimeStore.removeScoredAnime(id);
       scoredAnimeStore.removeZeroScoredAnimes();
@@ -72,7 +69,6 @@ const updateMovieScore = (newScore) => {
 };
 
 onMounted(async () => {
-  console.log('Movie.vue component mounted.');
     // Assuming the Anime_id is a unique identifier for the movie
     const currentRating = await fetchRatings(props.movie.Anime_id);
     
@@ -87,23 +83,15 @@ const fetchRatings = async (account_id, anime_id) => {
     try {
       // Access the account_id
       //const account_id = ref(accountStore.getAccountId);
-        //console.log(account_id);
         const account_id = user_info.account_id;
-        console.log(account_id);
         const anime_id = props.movie.Anime_id;
-        console.log(anime_id);
 
         // fetch rating scores
         const response = await axios.get(`${"http://127.0.0.1:8282"}/rating/fetch_ratings/${account_id}/${anime_id}`);
         if (response.status === 200) {
-            console.log('response data:', response.data);
             const score = response.data[0].scores;
             user_info.setScore(score);
-            console.log('saved score:', user_info.scores);
-
             user_info.setAnime(anime_id);
-            console.log('saved anime_id:', user_info.anime_id);
-
             // Once fetching is done:
             ratingsFetched.value = true;
 

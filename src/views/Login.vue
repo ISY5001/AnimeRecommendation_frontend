@@ -63,11 +63,12 @@ const loginUser = async () => {
       sessionStorage.setItem("isLoggedIn", "true");
       sessionStorage.setItem("username", response.data['username']);
       // Store the account_id into the sessionStorage
-      user_info.setUser(response.data);
+      console.log(response.data);
       // 存储用户的account_id
       router.push("/");
       // Store the user info in the store
       user_info.setUser(response.data);
+      console.log(user_info.account_id);
 
     } else {
       console.error("Login failed:", response.data.error)

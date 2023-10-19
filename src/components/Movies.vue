@@ -7,7 +7,6 @@ import { useAnimesStore } from "../store/animes"; // Adjust path as needed
 // You can define props inside the <script setup> using `defineProps`
 const { movies } = defineProps(['movies']);
 
-console.log(movies)
 // Fetch all movies on component mount
 onMounted(() => {
   //animesStore.getAllMovies();

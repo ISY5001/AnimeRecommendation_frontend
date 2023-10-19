@@ -27,8 +27,6 @@ const scrollComponent = ref(null);
 let totalPage = 2;
 setTimeout(() => {
   totalPage = Math.ceil(recAnimesStore.totalResults / 10);
-  console.log("Total Results:", recAnimesStore.totalResults);
-  console.log("Calculated Total Pages:", totalPage);
 }, 1000);
 // watch(recAnimesStore, (newValue, oldValue) => {
 //   if (newValue.totalResults !== oldValue.totalResults) {
@@ -42,11 +40,8 @@ setTimeout(() => {
 // register a listener to the DOM, which can fetch more movies data
 // when user scroll to the bottem of page.
 onMounted(() => {
-  console.log("onMounted hook is running");
   window.addEventListener("scroll", handleScroll);
-  console.log("before entering recAnimesStore.getAllMovies();");
   recAnimesStore.getRecAllMovies();
-  console.log("after quitting recAnimesStore.getAllMovies();");
 });
 
 const handleScroll = (e) => {
