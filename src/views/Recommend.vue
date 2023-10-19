@@ -45,7 +45,7 @@ onMounted(() => {
   console.log("onMounted hook is running");
   window.addEventListener("scroll", handleScroll);
   console.log("before entering recAnimesStore.getAllMovies();");
-  recAnimesStore.getAllMovies();
+  recAnimesStore.getRecAllMovies();
   console.log("after quitting recAnimesStore.getAllMovies();");
 });
 

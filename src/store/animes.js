@@ -26,7 +26,7 @@ export const useAnimesStore = defineStore("movies", {
         this.loadingMessage = "Please wait";
         
 
-        console.log('page number:',this.page)
+        console.log('page number:',this.page);
         try {
             const { data } = await axios.get(`http://127.0.0.1:8282/anime?page=${this.page}`);
             // alert("data.totalResults from animes.js" +  data.totalResults);

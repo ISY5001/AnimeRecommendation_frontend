@@ -11,7 +11,7 @@ alert("userInfo.username" + userInfo.username);
 const posted_username = userInfo.username||'chenzhw';
 
 
-export const useRecAnimesStore = defineStore("movies", {
+export const useRecAnimesStore = defineStore("recmovies", {
   // state function defines the intial state of the movies store
   state: () => {
     return {
@@ -28,8 +28,8 @@ export const useRecAnimesStore = defineStore("movies", {
   // actions object defines methods that can be used to interact with and modify
   // the store's state
   actions: {
-    async getAllMovies() {
-        console.log("getAllMovies function is called.");
+    async getRecAllMovies() {
+        console.log("getRecAllMovies function is called.");
         this.isLoading = true;
         this.loadingMessage = "Please wait";
         
