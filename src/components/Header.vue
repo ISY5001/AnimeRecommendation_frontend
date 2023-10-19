@@ -20,6 +20,12 @@
             <span class="text-lg tracking-wide md:text-xl">Scored Animes</span>
           </router-link>
         </li>
+        <li>
+          <router-link to="/recommend" class="flex text-yellow-600 items-center cursor-pointer">
+            <HeartIcon />
+            <span class="text-lg tracking-wide md:text-xl">Recommend Animes</span>
+          </router-link>
+        </li>
         <li class="relative">
           <!-- User icon -->
           <div class="flex text-blue-600 items-center cursor-pointer" @mouseenter="showUserDropdown = true" @mouseleave="hideUserDropdown">

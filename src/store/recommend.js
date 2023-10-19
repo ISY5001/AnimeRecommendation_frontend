@@ -1,12 +1,17 @@
 import axios from "axios";
 import { defineStore } from "pinia";
-
+import { userInfoStore } from "./userInfo";
 const MY_API_URL = "http://127.0.0.1:8282/";
 const OMDb_API_URL = "https://www.omdbapi.com/";
 const OMDb_API_KEY = "f9bfc5b4";
+// alert("recommend.js loading...");
+
+const userInfo = userInfoStore();
+// alert("userInfo.username" + userInfo.username);
+const posted_username = userInfo.username||'chenzhw';
 
 
-export const useAnimesStore = defineStore("movies", {
+export const useRecAnimesStore = defineStore("recmovies", {
   // state function defines the intial state of the movies store
   state: () => {
     return {
@@ -17,20 +22,24 @@ export const useAnimesStore = defineStore("movies", {
       loadingMessage: "Please wait",
       page: 1,
     };
+    
   },
+  
   // actions object defines methods that can be used to interact with and modify
   // the store's state
   actions: {
-    async getAllMovies() {
+    async getRecAllMovies() {
+        console.log("getRecAllMovies function is called.");
         this.isLoading = true;
         this.loadingMessage = "Please wait";
         
-
-        console.log('page number:',this.page);
         try {
-            const { data } = await axios.get(`http://127.0.0.1:8282/anime?page=${this.page}`);
-            // alert("data.totalResults from animes.js" +  data.totalResults);
-            
+            // alert("Geting All Movies recommended...")
+            // alert(posted_username);
+            const { data } = await axios.get(`http://127.0.0.1:8282/recommend?username=${posted_username}`);
+            // alert("data.totalResults from animes.js" +  data.totalResults + "posted " + posted_username);
+            // alert(data);
+            // alert(data.totalResults);
             this.totalResults = data.totalResults;
             
             // if (data.msg && data.msg === "No anime found!") {
@@ -41,14 +50,19 @@ export const useAnimesStore = defineStore("movies", {
             this.isLoading = false;
 
         } catch (err) {
+            alert(err);
             [this.isLoading, this.loadingMessage] = [true, err.message];
-            alert(err.message);
         }
     },
+      
+  }
+
+});
+    /*
     async nextPage() {
         
         //this.page += 1;  // Increment the page number
-        console.log('next page number:',this.page);
+        console.log('next page number:',this.page)
 
         try {
             this.isLoading = true;
@@ -69,13 +83,9 @@ export const useAnimesStore = defineStore("movies", {
             this.isLoading = false;
             this.errorMessage = error.message;
         }
-  },
+  },*/
 
   
 
 
 
-  
-}
-
-});
