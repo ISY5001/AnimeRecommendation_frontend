@@ -29,7 +29,6 @@ export function useScoredAnimeStore() {
     },
     removeScoredAnime(anime_id) {
       const index = state.scoredAnimes.findIndex(a => a.Anime_id === anime_id);
-      console.log('index:', index)
       if (index !== -1) {
         state.scoredAnimes.splice(index, 1);
         localStorage.setItem("scoredAnimes", JSON.stringify(state.scoredAnimes)); // Update local storage
