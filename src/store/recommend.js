@@ -4,10 +4,10 @@ import { userInfoStore } from "./userInfo";
 const MY_API_URL = "http://127.0.0.1:8282/";
 const OMDb_API_URL = "https://www.omdbapi.com/";
 const OMDb_API_KEY = "f9bfc5b4";
-alert("recommend.js loading...");
+// alert("recommend.js loading...");
 
 const userInfo = userInfoStore();
-alert("userInfo.username" + userInfo.username);
+// alert("userInfo.username" + userInfo.username);
 const posted_username = userInfo.username||'chenzhw';
 
 
@@ -34,12 +34,12 @@ export const useRecAnimesStore = defineStore("recmovies", {
         this.loadingMessage = "Please wait";
         
         try {
-            alert("Geting All Movies recommended...")
-            alert(posted_username);
+            // alert("Geting All Movies recommended...")
+            // alert(posted_username);
             const { data } = await axios.get(`http://127.0.0.1:8282/recommend?username=${posted_username}`);
             // alert("data.totalResults from animes.js" +  data.totalResults + "posted " + posted_username);
-            alert(data);
-            alert(data.totalResults);
+            // alert(data);
+            // alert(data.totalResults);
             this.totalResults = data.totalResults;
             
             // if (data.msg && data.msg === "No anime found!") {

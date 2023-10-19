@@ -10,7 +10,7 @@ const recAnimesStore = useRecAnimesStore();
 
 //import { useMoviesStore } from "../store/movies";
 //const store = useMoviesStore();
-alert("Recommend.vue calling..."); // worked
+// alert("Recommend.vue calling..."); // worked
 
 // define some reatcive variables using ref function, which used to 
 // store data that can trigger updates in teh component when their value change.
