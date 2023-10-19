@@ -14,12 +14,12 @@
             <span class="text-lg tracking-wide md:text-xl">AniVerse</span>
           </router-link>
         </li>
-        <!-- <li>
+        <li>
           <router-link to="/fav" class="flex text-red-600 items-center cursor-pointer">
             <HeartIcon />
             <span class="text-lg tracking-wide md:text-xl">Scored Animes</span>
           </router-link>
-        </li> -->
+        </li>
         <li>
           <router-link to="/recommend" class="flex text-red-600 items-center cursor-pointer">
             <HeartIcon />
