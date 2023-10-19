@@ -50,7 +50,6 @@ const loginUser = async () => {
     return;
   }
   try {
-    console.log("login")
     // Send a POST request to your Flask backend for user registration
     const response = await (async() => {
       return axios.post(`${"http://127.0.0.1:8282"}/login`, {
@@ -62,14 +61,13 @@ const loginUser = async () => {
     if (response.data.msg === "success") {
       // 存储登录状态到sessionStorage
       sessionStorage.setItem("isLoggedIn", "true");
+      sessionStorage.setItem("username", response.data['username']);
       // Store the account_id into the sessionStorage
       user_info.setUser(response.data);
       // 存储用户的account_id
       router.push("/");
       // Store the user info in the store
       user_info.setUser(response.data);
-      console.log('data:',response.data);
-      console.log(user_info.account_id, user_info.username);
 
     } else {
       console.error("Login failed:", response.data.error)

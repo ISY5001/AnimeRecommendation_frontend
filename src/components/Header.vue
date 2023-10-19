@@ -30,7 +30,7 @@
           <!-- User icon -->
           <div class="flex text-blue-600 items-center cursor-pointer" @mouseenter="showUserDropdown = true" @mouseleave="hideUserDropdown">
             <StarIcon />
-            <span class="text-lg tracking-wide md:text-xl">User</span>
+            <span class="text-lg tracking-wide md:text-xl">{{userNames}}</span>
           </div>
           <!-- Dropdown menu for User -->
           <transition name="fade">
@@ -72,7 +72,7 @@ import ChatBotIcon from "./icons/ChatBotIcon.vue";
 import HeartIcon from "./icons/HeartIcon.vue";
 import StarIcon from "./icons/StarIcon.vue";
 import AIcon from "./icons/AIcon.vue";
-import { ref, reactive } from 'vue';
+import { ref, reactive, computed } from 'vue';
 
 import { useRouter } from "vue-router";
 const router = useRouter();
@@ -97,7 +97,6 @@ const cancelHideTimer = () => {
 const logout = () => {
   // 在此处理注销逻辑
   // 将sessionStorage中的登录状态设为false
-  console.log("user click logout")
   sessionStorage.setItem("isLoggedIn", "false");
   showLogoutConfirmation.value = false; // 关闭对话框
   router.push('/login');
@@ -108,6 +107,17 @@ const cancelLogout = () => {
 };
 
 const showLogoutConfirmation = ref(false);
+
+const userNames = computed(() => {
+  const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+  const user_names = sessionStorage.getItem("username");
+  if (isLoggedIn === 'true') { // 使用字符串比较
+    return user_names;
+  }
+  return 'User';
+});
+
+
 
 </script>
 
