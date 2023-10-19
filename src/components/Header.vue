@@ -21,7 +21,7 @@
           </router-link>
         </li>
         <li>
-          <router-link to="/recommend" class="flex text-red-600 items-center cursor-pointer">
+          <router-link to="/recommend" class="flex text-yellow-600 items-center cursor-pointer">
             <HeartIcon />
             <span class="text-lg tracking-wide md:text-xl">Recommend Animes</span>
           </router-link>
