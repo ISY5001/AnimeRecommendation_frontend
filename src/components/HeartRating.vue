@@ -83,6 +83,7 @@ const toggleHeart = (index) => {
   // Always check if the total score after toggling is zero
   const currentTotalScore = ratings.value.reduce((sum, rating) => sum + (rating) * 2, 0);
   if (currentTotalScore === 0) {
+    uploadScore(0);
     // If the score is zero, remove the anime from the scoredAnime store
     scoredAnimeStore.removeScoredAnime(props.Anime_id);
   }
@@ -92,7 +93,8 @@ const toggleHeart = (index) => {
 
 function uploadScore(score) {
   const upload_score = {
-    account_id: props.account_id,
+    // account_id: props.account_id,
+    account_id: sessionStorage.getItem("accountID"),
     anime_id: props.Anime_id,
     scores: score,
   };

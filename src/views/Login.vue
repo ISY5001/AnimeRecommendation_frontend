@@ -69,6 +69,7 @@ const loginUser = async () => {
       // Store the user info in the store
       user_info.setUser(response.data);
       console.log(user_info.account_id);
+      sessionStorage.setItem("accountID", user_info.account_id);
 
     } else {
       console.error("Login failed:", response.data.error)

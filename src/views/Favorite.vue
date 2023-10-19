@@ -16,7 +16,8 @@ const user_info = userInfoStore();
 onMounted(async () => {
   try {
     console.log(user_info);
-    const response = await axios.get(`${"http://127.0.0.1:8282"}/nonzero_rating/${user_info.account_id}`);
+    // const response = await axios.get(`${"http://127.0.0.1:8282"}/nonzero_rating/${user_info.account_id}`);
+    const response = await axios.get(`${"http://127.0.0.1:8282"}/rating/nonzero_rating/${sessionStorage.getItem("accountID")}`);
     if (response.data) {
       scoredAnimeStore.setScoredAnimes(response.data);
     }
