@@ -9,23 +9,35 @@
       <!-- Navigation links -->
       <ul class="flex space-x-4">
         <li>
+          <router-link to="/unv" class="flex text-green-600 items-center cursor-pointer">
+            <AIcon />
+            <span class="text-lg tracking-wide md:text-xl">AniVerse</span>
+          </router-link>
+        </li>
+        <li>
           <router-link to="/fav" class="flex text-red-600 items-center cursor-pointer">
             <HeartIcon />
             <span class="text-lg tracking-wide md:text-xl">Scored Animes</span>
+          </router-link>
+        </li>
+        <li>
+          <router-link to="/recommend" class="flex text-yellow-600 items-center cursor-pointer">
+            <HeartIcon />
+            <span class="text-lg tracking-wide md:text-xl">Recommend Animes</span>
           </router-link>
         </li>
         <li class="relative">
           <!-- User icon -->
           <div class="flex text-blue-600 items-center cursor-pointer" @mouseenter="showUserDropdown = true" @mouseleave="hideUserDropdown">
             <StarIcon />
-            <span class="text-lg tracking-wide md:text-xl">User</span>
+            <span class="text-lg tracking-wide md:text-xl">{{userNames}}</span>
           </div>
           <!-- Dropdown menu for User -->
           <transition name="fade">
-            <div v-if="showUserDropdown" class="absolute top-10 right-0 bg-white p-2 space-y-2 shadow-md rounded-lg" @mouseenter="cancelHideTimer" @mouseleave="startHideTimer">
+            <div v-if="showUserDropdown" class="absolute top-10 right-0 bg-white p-2 space-y-2 shadow-md rounded-lg" @mouseleave="startHideTimer">
+              <a href="#" class="block" @click="showLogoutConfirmation = true">Logout</a>
               <router-link to="/login" class="block">Login</router-link>
               <router-link to="/register" class="block">Register</router-link>
-              <router-link to="/logout" class="block">Logout</router-link>
             </div>
           </transition>
         </li>
@@ -34,14 +46,23 @@
       </ul>
     </nav>
 
-  <div id="app">
-    <FloatingChatbot />
-    <!-- 其他内容 -->
-  </div>
+    <div id="app">
+      <FloatingChatbot />
+      <!-- 其他内容 -->
+    </div>
 
     <p class="mt-6 mb-7 text-gray-200 text-xs font-light tracking-wide md:text-lg md:tracking-wider lg:text-sm">
       You can search any movies on this website
     </p>
+
+    <!-- Confirmation dialog for logout -->
+    <div v-if="showLogoutConfirmation" class="absolute top-20 right-5 bg-white p-4 shadow-md rounded-lg" @mouseleave="startHideTimer">
+      <p>Are you sure you want to logout?</p>
+      <div class="flex justify-end space-x-2">
+        <button @click="logout" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Yes</button>
+        <button @click="cancelLogout" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">No</button>
+      </div>
+    </div>
   </header>
 </template>
 
@@ -50,7 +71,11 @@ import Search from "./Search.vue";
 import ChatBotIcon from "./icons/ChatBotIcon.vue";
 import HeartIcon from "./icons/HeartIcon.vue";
 import StarIcon from "./icons/StarIcon.vue";
-import { ref, reactive } from 'vue';
+import AIcon from "./icons/AIcon.vue";
+import { ref, reactive, computed } from 'vue';
+
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 const showUserDropdown = ref(false);
 const hideTimer = ref(null);
@@ -58,7 +83,7 @@ const hideTimer = ref(null);
 const hideUserDropdown = () => {
   hideTimer.value = setTimeout(() => {
     showUserDropdown.value = false;
-  }, 500); // Adjust the delay as needed (in milliseconds)
+  }, 2000); // Adjust the delay as needed (in milliseconds)
 };
 
 const startHideTimer = () => {
@@ -68,6 +93,32 @@ const startHideTimer = () => {
 const cancelHideTimer = () => {
   clearTimeout(hideTimer.value);
 };
+
+const logout = () => {
+  // 在此处理注销逻辑
+  // 将sessionStorage中的登录状态设为false
+  sessionStorage.setItem("isLoggedIn", "false");
+  showLogoutConfirmation.value = false; // 关闭对话框
+  router.push('/login');
+};
+
+const cancelLogout = () => {
+  showLogoutConfirmation.value = false; // 关闭对话框
+};
+
+const showLogoutConfirmation = ref(false);
+
+const userNames = computed(() => {
+  const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+  const user_names = sessionStorage.getItem("username");
+  if (isLoggedIn === 'true') { // 使用字符串比较
+    return user_names;
+  }
+  return 'User';
+});
+
+
+
 </script>
 
 <style scoped>

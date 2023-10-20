@@ -72,7 +72,6 @@ const registerUser = async() => {
       return;
   }
   try {
-      console.log("register")
       // Send a POST request to your Flask backend for user registration
       const response = await (async() => {
           return axios.post(`${"http://127.0.0.1:8282"}/register`, {
@@ -81,7 +80,6 @@ const registerUser = async() => {
             password: password.value,
           });
       })();
-      console.log(response)
       if (response.data.msg === "success") {
           router.push("/login");
       } else {

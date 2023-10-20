@@ -20,7 +20,7 @@
 
 <script setup>
 import Header from './components/Header.vue';
-import FloatingChatbot from './components/FloatingChatbot.vue';  // Import the FloatingChatbot component
+import FloatingChatbot from './components/FloatingChatBot.vue';  // Import the FloatingChatbot component
 </script>
 
 <style>

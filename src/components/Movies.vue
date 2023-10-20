@@ -3,9 +3,10 @@ import { onMounted } from 'vue';
 import Movie from "./Movie.vue";
 import { useAnimesStore } from "../store/animes"; // Adjust path as needed
 
-const animesStore = useAnimesStore();
+// const animesStore = useAnimesStore();
 // You can define props inside the <script setup> using `defineProps`
 const { movies } = defineProps(['movies']);
+
 // Fetch all movies on component mount
 onMounted(() => {
   //animesStore.getAllMovies();

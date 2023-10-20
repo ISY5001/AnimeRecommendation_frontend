@@ -47,7 +47,24 @@ const routes = [
       leaveClass: "animate__animated animate__fadeOutLeft",
     },
   },
-
+  {
+    path: "/recommend",
+    name: "Recommend",
+    component: () => import("../views/Recommend.vue"),
+    meta: {
+      enterClass: "animate__animated animate__fadeInLeft",
+      leaveClass: "animate__animated animate__fadeOutLeft",
+    },
+  },
+  {
+    path: "/unv",
+    name: "Unv",
+    component: () => import("../views/Aniverse.vue"),
+    meta: {
+      enterClass: "animate__animated animate__fadeInLeft",
+      leaveClass: "animate__animated animate__fadeOutLeft",
+    },
+  },
   {
     path: "/:pathMatch(.*)*",
     name: "NotFound",

@@ -31,7 +31,7 @@ const props = defineProps({
   fetchRatings: Function,
 });
 
-//Substry?
+// Substry?
 const title = props.movie.Title.substr(0, 15) + "...";
 
 
@@ -47,7 +47,6 @@ const toggleScore = (id, newScore) => {
 
   if (foundMovie) {
     if (newScore === 0) {
-      console.log('Newscore=0');
       // If the new score is 0, remove the score
       scoredAnimeStore.removeScoredAnime(id);
       scoredAnimeStore.removeZeroScoredAnimes();
@@ -67,10 +66,9 @@ const toggleScore = (id, newScore) => {
 const updateMovieScore = (newScore) => {
       useScoreStore().updateScore(movieId.value, newScore);
       movieScore.value = newScore;
-    };
+};
 
 onMounted(async () => {
-  console.log('Movie.vue component mounted.');
     // Assuming the Anime_id is a unique identifier for the movie
     const currentRating = await fetchRatings(props.movie.Anime_id);
     
@@ -85,23 +83,16 @@ const fetchRatings = async (account_id, anime_id) => {
     try {
       // Access the account_id
       //const account_id = ref(accountStore.getAccountId);
-        //console.log(account_id);
         const account_id = user_info.account_id;
-        console.log(account_id);
         const anime_id = props.movie.Anime_id;
-        console.log(anime_id);
 
         // fetch rating scores
-        const response = await axios.get(`${"http://127.0.0.1:8282"}/rating/fetch_ratings/${account_id}/${anime_id}`);
+        // const response = await axios.get(`${"http://127.0.0.1:8282"}/rating/fetch_ratings/${account_id}/${anime_id}`);
+        const response = await axios.get(`${"http://127.0.0.1:8282"}/rating/fetch_ratings/${sessionStorage.getItem("accountID")}/${anime_id}`);
         if (response.status === 200) {
-            console.log('response data:', response.data);
             const score = response.data[0].scores;
             user_info.setScore(score);
-            console.log('saved score:', user_info.scores);
-
             user_info.setAnime(anime_id);
-            console.log('saved anime_id:', user_info.anime_id);
-
             // Once fetching is done:
             ratingsFetched.value = true;
 
@@ -126,13 +117,11 @@ const exposed = ref({ fetchRatings });
 
 const rateAnimeFunction = async (anime_id, score) => {
     try {
-
         if (score === 0) {
-      // If the new score is 0, remove the score
-      scoredAnimeStore.removeScoredAnime(anime_id);
-      scoredAnimeStore.removeZeroScoredAnimes();
+          // If the new score is 0, remove the score
+          scoredAnimeStore.removeScoredAnime(anime_id);
+          scoredAnimeStore.removeZeroScoredAnimes();
         }
-        
         const response = await axios.post(`${"http://127.0.0.1:8282"}/rating/upload_ratings`, {
             anime_id: anime_id,
             score: score
@@ -147,7 +136,16 @@ const rateAnimeFunction = async (anime_id, score) => {
     }
 };
 
-
+const years = (inputString) => {
+  const parts = inputString.split(',');
+  const lastPart = parts[parts.length - 1];
+  const yearPattern = /(\d{4})/;
+  const match = lastPart.match(yearPattern);
+  if (match) {
+    return match[1];
+  }
+  return 'none';
+}
 
 </script>
 
@@ -162,7 +160,7 @@ const rateAnimeFunction = async (anime_id, score) => {
         <img
           :src="movie.Poster"
           class="w-full h-full aspect-auto md:object-cover lg:aspect-auto"
-          :alt="movie.Title"
+          :alt="xxx"
         />
       </div>
       <div v-else>
@@ -177,7 +175,7 @@ const rateAnimeFunction = async (anime_id, score) => {
 
   <div class="mt-4 w-full">
     <div class="text-red-200 flex items-center justify-between">
-      <router-link :to="{ name: 'Details', params: { id: movie.Anime_id } }">
+      <router-link :to="{ name: 'Details', params: { id: movie.soup } }">
         <h3 class="font-medium text-md tracking-wide" :title="movie.Title">
           {{ title }}
         </h3>
@@ -188,8 +186,7 @@ const rateAnimeFunction = async (anime_id, score) => {
     </div>
     <div class="text-gray-200 flex mt-3 items-center font-medium text-sm">
       <CalendarIcon />
-      <ChatBot />
-      {{ movie.Year }}
+      {{ years(movie.Aired) }}
 
 
     </div>

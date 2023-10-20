@@ -80,7 +80,6 @@ import axios from "axios";
         const response = await axios.post(`${"http://127.0.0.1:8282"}/chatbot`, {
           userMessage: message
         });
-        console.log(response.data);  // 打印服务器的响应
 
         // 你可以在这里添加处理服务器响应的代码，例如添加 chatbot 的回复到 messages 数组
         if (response.data.botReply) {
