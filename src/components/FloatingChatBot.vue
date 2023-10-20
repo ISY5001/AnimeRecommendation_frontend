@@ -8,16 +8,21 @@
 
 
     <div v-if="showDialog" class="chatbot-dialog" @click="showIcon">
+      
       <div class="chatbot-header">
         <h4>Chatbot Assistant</h4>
         <button @click="closeDialog">X</button>
+        
       </div>
   
-      <div class="chatbot-messages">
-        <div class="message" v-for="message in messages" :key="message.id">
-          <span :class="message.sender">{{ message.text }}</span>
+      <div class="chatbot-messages" ref="messages">
+      <div v-for="message in messages" :key="message.id" class="message" :class="message.sender">
+        <span>{{ message.text }}</span>
+        <div v-if="message.sender === 'chatbot' && message.loading" class="loading">
+          <img src="../assets/loading.gif" alt="Loading..." /> <!-- 可以是一个加载 GIF -->
         </div>
       </div>
+    </div>
   
       <div class="chatbot-input">
         <input type="text" v-model="inputMessage" @keyup.enter="sendMessage" />
@@ -44,6 +49,14 @@ import axios from "axios";
 
       };
     },
+    watch: {
+    messages() {
+      this.$nextTick(() => {
+        const container = this.$refs.messages;
+        container.scrollTop = container.scrollHeight;
+      });
+    },
+  },
     methods: {
       toggleChatbot() {
         this.showIcon = !this.showIcon;
@@ -62,19 +75,27 @@ import axios from "axios";
         this.showIcon = true;
       },
       sendMessage() {
-        if (this.inputMessage.trim() !== '') {
-          this.messages.push({
-            id: this.messages.length + 1,
-            text: this.inputMessage,
-            sender: 'user',
-          });
-          
-          this.sendToServer(this.inputMessage);  // 发送用户输入到服务器
-          this.inputMessage = '';
-          // Here, you can also add a function to handle user's message and generate chatbot's response
-        }
-      },
-      async sendToServer(message) {
+      if (this.inputMessage.trim() !== '') {
+        this.messages.push({
+          id: this.messages.length + 1,
+          text: this.inputMessage,
+          sender: 'user',
+        });
+
+        // 添加一个聊天机器人的加载消息
+        const loadingMessage = {
+          id: this.messages.length + 1,
+          text: '...',
+          sender: 'chatbot',
+          loading: true,
+        };
+        //this.messages.push(loadingMessage);
+
+        this.sendToServer(this.inputMessage, loadingMessage);  
+        this.inputMessage = '';
+      }
+    },
+      async sendToServer(message, loadingMessage) {
       try {
         
         const response = await axios.post(`${"http://127.0.0.1:8282"}/chatbot`, {
@@ -89,6 +110,8 @@ import axios from "axios";
                 sender: 'chatbot',
             });
         }
+        // 移除加载消息
+        this.messages = this.messages.filter(msg => msg !== loadingMessage);
       } catch (error) {
         console.error('There was an error!', error);
       }
@@ -168,5 +191,9 @@ import axios from "axios";
     margin-right: 10px;
     padding: 5px;
   }
+  .loading img {
+  width: 30px;
+  height: auto;
+}
   </style>
   
