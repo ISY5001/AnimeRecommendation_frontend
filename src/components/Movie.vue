@@ -136,6 +136,7 @@ const rateAnimeFunction = async (anime_id, score) => {
     }
 };
 
+/*
 const years = (inputString) => {
   console.log('inputString',inputString)
   const parts = inputString.split(',');
@@ -147,7 +148,7 @@ const years = (inputString) => {
   }
   return 'none';
 }
-
+*/
 </script>
 
 
