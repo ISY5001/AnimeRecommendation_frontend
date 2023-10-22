@@ -3,52 +3,56 @@
   <div class="container mt-5 aniverse">
     <h1 class="text-center mb-5 styled-title">Welcome to AniVerse</h1>
 
-    
-
-
-    <!-- 文件上传 -->
     <!-- 文件上传 -->
     <div class="mb-5 text-center">
-    <input 
-        type="file" 
-        id="file-upload" 
-        @change="onFileChange" 
-        style="display: none;" 
-    />
-    <label for="file-upload" class="btn btn-primary custom-file-upload">
-         {{ buttonText }}
-    </label>
+      <input 
+          type="file" 
+          id="file-upload" 
+          @change="onFileChange" 
+          style="display: none;" 
+      />
+      <label for="file-upload" class="btn btn-primary custom-file-upload">
+          {{ buttonText }}
+      </label>
     </div>
-
-
 
     <!-- 样式选择按钮 -->
     <div class="styles mb-5 text-center">
-    <button @click="applyStyle('style1')" class="btn mx-2 paprika-style-btn">
-        Paprika Style
-    </button>
-    <button @click="applyStyle('style2')" class="btn mx-2 hayao-style-btn">
-        Hayao Style
-    </button>
-    <button @click="applyStyle('style3')" class="btn mx-2 shinkai-style-btn">
-        Shinkai Style
-    </button>
+      <button @click="applyStyle('style1')" class="btn mx-2 paprika-style-btn">
+          Paprika Style
+      </button>
+      <button @click="applyStyle('style2')" class="btn mx-2 hayao-style-btn">
+          Hayao Style
+      </button>
+      <button @click="applyStyle('style3')" class="btn mx-2 shinkai-style-btn">
+          Shinkai Style
+      </button>
     </div>
 
-
     <!-- 图片展示区域 -->
-    <div v-if="imageUrl" class="image-preview text-center">
-      <img :src="imageUrl" alt="Preview" class="img-fluid rounded" />
+    <div class="image-preview text-center">
+      <div v-if="imageUrl" class="d-inline-block">
+        <img :src="imageUrl" alt="Original" class="img-fluid rounded" />
+        <div>Original</div>
+      </div>
+
+      <div v-if="processedImageUrl" class="d-inline-block">
+        <img :src="processedImageUrl" alt="Styled" class="img-fluid rounded" />
+        <div>Styled</div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   data() {
     return {
       selectedFile: null,
       imageUrl: '',
+      buttonText: 'Please Select Your Image',
+      processedImageUrl: null,  // 新增：用于存储处理后的图片的URL
       buttonText: 'Please Select Your Image'
     };
   },
@@ -58,17 +62,40 @@ export default {
       if (!files.length) return;
       this.createImage(files[0]);
       this.buttonText = 'Selected';
+      this.selectedFile = files[0];  // 存储文件对象
     },
     createImage(file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        this.imageUrl = e.target.result;
+        this.imageUrl = e.target.result;  // 显示原始图片
       };
       reader.readAsDataURL(file);
     },
     applyStyle(styleName) {
       console.log('Applying style:', styleName);
-      // 这里你可以根据所选样式调用后端 API，处理并返回样式化的图像
+
+      const formData = new FormData();
+      formData.append('style', styleName);  
+      formData.append('image', this.selectedFile);  
+
+      axios.post('http://localhost:8282/Anyani/upload_image', formData, { 
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      .then(response => {
+        console.log('Style applied:', response.data);
+        // 假设后端返回处理后的图像的文件名
+        const filename = response.data.filename;  
+        
+        // 构造一个URL来访问该文件
+        this.processedImageUrl = `http://localhost:8282/content/outputs/${filename}`;
+        console.log(this.processedImageUrl);
+        console.log(filename)
+})
+      .catch(error => {
+        console.error('Error applying style:', error);
+      });
     },
   },
 };
