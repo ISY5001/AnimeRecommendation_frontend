@@ -136,19 +136,19 @@ const rateAnimeFunction = async (anime_id, score) => {
     }
 };
 
-/*
-const years = (inputString) => {
-  console.log('inputString',inputString)
-  const parts = inputString.split(',');
-  const lastPart = parts[parts.length - 1];
-  const yearPattern = /(\d{4})/;
-  const match = lastPart.match(yearPattern);
-  if (match) {
-    return match[1];
-  }
-  return 'none';
-}
-*/
+
+//const years = (inputString) => {
+//  console.log('inputString',inputString)
+//  const parts = inputString.split(',');
+//  const lastPart = parts[parts.length - 1];
+//  const yearPattern = /(\d{4})/;
+//  const match = lastPart.match(yearPattern);
+//  if (match) {
+//    return match[1];
+//  }
+//  return 'none';
+//}
+
 </script>
 
 
@@ -188,7 +188,7 @@ const years = (inputString) => {
     </div>
     <div class="text-gray-200 flex mt-3 items-center font-medium text-sm">
       <CalendarIcon />
-      {{ years(movie.Aired) }}
+      <!--{{ years(movie.Aired) }}-->
 
 
     </div>
