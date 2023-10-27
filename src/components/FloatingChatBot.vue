@@ -4,23 +4,24 @@
       <!-- SVG 或图像可以放在这里表示 chatbot 的图标 -->
       <img src="../assets/chatbot-icon.svg" alt="Chatbot Icon" />
     </div>
-    
 
-
-    <div v-if="showDialog" class="chatbot-dialog" @click="showIcon">
+    <div v-if="showDialog" :class="{'chatbot-dialog': true, 'maximized': isMaximized}" @click="showIcon">
       
       <div class="chatbot-header">
         <h4>Chatbot Assistant</h4>
+        <button @click="toggleSize" class="size-toggle">+</button> <!-- 这是放大图标 -->
         <button @click="closeDialog">X</button>
         
       </div>
   
       <div class="chatbot-messages" ref="messages">
-      <div v-for="message in messages" :key="message.id" class="message" :class="message.sender">
-        <span>{{ message.text }}</span>
-        <div v-if="message.sender === 'chatbot' && message.loading" class="loading">
-          <img src="../assets/loading.gif" alt="Loading..." /> <!-- 可以是一个加载 GIF -->
-        </div>
+      <div class="bubble">
+        <div v-for="message in messages" :key="message.id" class="message" :class="message.sender">
+      <div class="bubble">
+      <span>{{ message.text }}</span>
+    </div>
+  </div>
+
       </div>
     </div>
   
@@ -42,6 +43,7 @@ import axios from "axios";
         showChatbot: false,
         showDialog: false,
         inputMessage: '',
+        isMaximized: false, // 用于跟踪对话框是否被放大
         messages: [
           { id: 1, text: 'Hello! How can I assist you today?', sender: 'chatbot' },
           // Add more messages as needed
@@ -62,6 +64,9 @@ import axios from "axios";
         this.showIcon = !this.showIcon;
         this.showChatbot = !this.showChatbot;
         this.showDialog = true;
+      },
+      toggleSize() {
+      this.isMaximized = !this.isMaximized; // 切换放大/缩小状态
       },
       showChatbot() {
         this.showChatbot = true;
@@ -129,17 +134,17 @@ import axios from "axios";
     cursor: pointer;
   }
   
-  .chatbot-dialog {
+  /* .chatbot-dialog {
     position: fixed;
     bottom: 20px;
     right: 20px;
     z-index: 1000;
     width: 300px;
     height: 500px;
-    background-color: white;
+    background-color: rgb(190, 190, 190);
     border: 1px solid black;
     border-radius: 10px;
-  }
+  } */
 
   .chatbot-dialog {
     position: fixed;
@@ -149,7 +154,7 @@ import axios from "axios";
     height: 400px;
     border: 1px solid #ccc;
     border-radius: 10px;
-    background-color: white;
+    background-color: rgb(183, 183, 183);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -175,10 +180,13 @@ import axios from "axios";
   }
   
   .message.user {
-    color: green;
-    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 0; 
+}
+  .chatbot-dialog.maximized .message.user {
+  justify-content:right;  /* 当对话框最大化时，将消息居中显示 */
   }
-  
   .chatbot-input {
     display: flex;
     padding: 10px;
@@ -195,5 +203,96 @@ import axios from "axios";
   width: 30px;
   height: auto;
 }
+.message {
+  padding: 8px;
+}
+
+.bubble {
+  display: inline-block;
+  padding: 10px 15px;
+  border-radius: 15px;
+  max-width: 90%; /* 避免消息太长 */
+  position: relative;
+}
+
+.message.chatbot .bubble {
+  background-color: #e6e5eb; /* 聊天机器人的消息背景色 */
+  border-top-left-radius: 1px;
+  color: #333;
+}
+
+.message.user .bubble {
+    background-color: #007AFF; /* 用户的消息背景色 */
+    border-top-right-radius: 1px;
+    /* margin-right: 2px;  这是为了让气泡有一些距离 */
+    color: white;
+    text-align: left;
+}
+
+/* 对话气泡的尾巴 */
+.message.chatbot .bubble::before {
+  content: "";
+  width: 10px;
+  height: 22px;
+  background-color: #e6e5eb;
+  position: absolute;
+  top: 0;
+  left: -4px;
+  transform: rotate(-27deg);
+  clip-path: polygon(0 0, 100% 0%, 0% 100%);
+}
+
+.message.user .bubble::before {
+  content: "";
+  width: 10px;
+  height: 19px;
+  background-color: #007AFF;
+  position: absolute;
+  top: 0;
+  right: -5px;
+  transform: rotate(27deg);
+  clip-path: polygon(100% 0, 100% 100%, 0% 100%);
+}
+
+.chatbot-header button {
+  background-color: red;
+  color: white; 
+  border: none; 
+  border-radius: 50%; 
+  width: 20px;
+  height: 20px; 
+  font-size: 14px; 
+  line-height: 18px; 
+  text-align: center;
+  cursor: pointer;
+}
+
+.chatbot-header button:hover {
+  background-color: darkred; /* 鼠标悬停时颜色变深 */
+}
+/* 放大/缩小按钮的样式 */
+.chatbot-header .size-toggle {
+  background-color: #00af37;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
+  margin-right: 1px;
+  cursor: pointer;
+}
+
+.chatbot-header .size-toggle:hover {
+  background-color: #00532e;
+}
+
+/* 对话框的最大化样式 */
+.chatbot-dialog.maximized {
+  width: 600px; /* 你可以根据需要设置其他尺寸 */
+  height: 800px;
+  bottom: 10px;
+  right: 10px;
+}
+
   </style>
   

@@ -3,7 +3,7 @@
     <nav class="flex justify-between items-center">
       <!-- Logo/Home link -->
       <router-link to="/">
-        <h1 class="text-xl font-semibold tracking-wider text-gray-200 md:text-2xl">MyAnimes</h1>
+        <h1 class="text-xl font-semibold tracking-wider text-gray-200 md:text-2xl">AnyAni</h1>
       </router-link>
 
       <!-- Navigation links -->
@@ -52,7 +52,7 @@
     </div>
 
     <p class="mt-6 mb-7 text-gray-200 text-xs font-light tracking-wide md:text-lg md:tracking-wider lg:text-sm">
-      You can search any movies on this website
+      You can search any animes on this website
     </p>
 
     <!-- Confirmation dialog for logout -->
