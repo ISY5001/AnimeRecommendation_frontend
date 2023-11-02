@@ -35,7 +35,7 @@ export const useRecAnimesStore = defineStore("recmovies", {
 
       try {
         // alert("Geting All Movies recommended...")
-        // alert(posted_username);
+        //alert(posted_username);
         const { data } = await axios.get(`http://127.0.0.1:8282/recommend?username=${posted_username}`);
         // alert("data.totalResults from animes.js" +  data.totalResults + "posted " + posted_username);
         // alert(data);
