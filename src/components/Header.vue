@@ -28,18 +28,31 @@
         </li>
         <li class="relative">
           <!-- User icon -->
-          <div class="flex text-blue-600 items-center cursor-pointer" @mouseenter="showUserDropdown = true" @mouseleave="hideUserDropdown">
+          <!--div class="flex text-blue-600 items-center cursor-pointer" @mouseenter="showUserDropdown = true" @mouseleave="hideUserDropdown">
             <StarIcon />
             <span class="text-lg tracking-wide md:text-xl">{{userNames}}</span>
+          </div-->
+
+          <!-- User icon -->
+          <div class="flex text-blue-600 items-center cursor-pointer" @mouseenter="showUserDropdown = true" @mouseleave="hideUserDropdown">
+              <div class="bg-gray-300 rounded-full w-8 h-8 overflow-hidden">
+                  <img :src="userAvatar" alt="User Avatar" class="w-full h-full object-cover">
+              </div>
+              <span class="text-lg tracking-wide md:text-xl">{{userNames}}</span>
           </div>
           <!-- Dropdown menu for User -->
+          
+
+          <!-- Dropdown menu for User -->
           <transition name="fade">
-            <div v-if="showUserDropdown" class="absolute top-10 right-0 bg-white p-2 space-y-2 shadow-md rounded-lg" @mouseleave="startHideTimer">
-              <a href="#" class="block" @click="showLogoutConfirmation = true">Logout</a>
-              <router-link to="/login" class="block">Login</router-link>
-              <router-link to="/register" class="block">Register</router-link>
-            </div>
+              <div v-if="showUserDropdown" class="absolute top-10 right-0 bg-white p-2 space-y-2 shadow-md rounded-lg" @mouseleave="startHideTimer">
+                  <router-link to="/profile" class="block">Profile</router-link>
+                  <a href="#" class="block" @click="showLogoutConfirmation = true">Logout</a>
+                  <router-link to="/login" class="block">Login</router-link>
+                  <router-link to="/register" class="block">Register</router-link>
+              </div>
           </transition>
+
         </li>
         
         <!-- Add more navigation links as needed -->
@@ -73,6 +86,8 @@ import HeartIcon from "./icons/HeartIcon.vue";
 import StarIcon from "./icons/StarIcon.vue";
 import AIcon from "./icons/AIcon.vue";
 import { ref, reactive, computed } from 'vue';
+import axios from "axios";
+import { onMounted } from 'vue';
 
 import { useRouter } from "vue-router";
 const router = useRouter();
@@ -116,6 +131,26 @@ const userNames = computed(() => {
   }
   return 'User';
 });
+
+// Add this to your <script setup>
+const userAvatar = ref(null);
+const accountId = sessionStorage.getItem("accountID");
+
+const fetchAvatar = async () => {
+    try {
+        const response = await axios.get(`http://127.0.0.1:8282/get_avatar/${accountId}`);
+        if (response && response.data) {
+            userAvatar.value = response.data;
+        }
+    } catch (error) {
+        console.error('Error fetching avatar:', error);
+    }
+};
+
+// Fetch the avatar when the component is mounted
+onMounted(fetchAvatar);
+
+
 
 
 
