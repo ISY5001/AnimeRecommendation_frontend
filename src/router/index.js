@@ -66,6 +66,15 @@ const routes = [
     },
   },
   {
+    path: "/aniprofile",
+    name: "AniProfile",
+    component: () => import("../views/AniProfile.vue"),
+    meta: {
+      enterClass: "animate__animated animate__fadeInLeft",
+      leaveClass: "animate__animated animate__fadeOutLeft",
+    },
+  },
+  {
     path: "/:pathMatch(.*)*",
     name: "NotFound",
     component: () => import("../views/NotFound.vue"),
