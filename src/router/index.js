@@ -83,6 +83,16 @@ const routes = [
       leaveClass: "animate__animated animate__fadeOutLeft",
     },
   },
+
+  {
+    path: "/profile",
+    name: "Profile",
+    component: () => import("../views/Profile.vue"),
+    meta: {
+      enterClass: "animate__animated animate__fadeInLeft",
+      leaveClass: "animate__animated animate__fadeOutLeft",
+    },
+  },
 ];
 
 const router = createRouter({
