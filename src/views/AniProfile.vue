@@ -1,8 +1,9 @@
 
 <template>
   <div class="container mt-5 aniverse">
-    <h1 class="text-center mb-5 styled-title">Welcome to AniVerse</h1>
+    <!-- <h1 class="text-center mb-5 styled-title">Welcome to AniVerse</h1> -->
 
+    <!-- 文件上传 -->
     <!-- 文件上传 -->
     <div class="mb-5 text-center">
       <input type="file" id="file-upload" @change="onFileChange" style="display: none;" />
@@ -11,20 +12,70 @@
       </label>
     </div>
 
+
+
     <!-- 样式选择按钮 -->
     <div class="styles mb-5 text-center">
-      <button @click="applyStyle('style1')" class="btn mx-2 paprika-style-btn">
-        Paprika Style
-      </button>
-      <button @click="applyStyle('style2')" class="btn mx-2 hayao-style-btn">
-        Hayao Style
-      </button>
-      <button @click="applyStyle('style3')" class="btn mx-2 shinkai-style-btn">
-        Shinkai Style
-      </button>
+
+      <div class="style-button-container">
+        <a @click="applyStyle('AnimeGANv2_Paprika')" class="btn-link">
+          <img src="src/components/icons/default_Paprika.jpg" alt="Paprika Style" class="styled-image" />
+          <button @click="applyStyle('AnimeGANv2_Paprika')" class="btn mx-2 paprika-style-btn">
+            Paprika Style
+          </button>
+        </a>
+      </div>
+
+      <div class="style-button-container">
+        <a @click="applyStyle('AnimeGANv2_Hayao')" class="btn-link">
+          <img src="src/components/icons/default_Hayao.jpg" alt="Hayao Style" class="styled-image" />
+          <button @click="applyStyle('AnimeGANv2_Hayao')" class="btn mx-2 hayao-style-btn">
+            Hayao Style
+          </button>
+        </a>
+      </div>
+
+      <div class="style-button-container">
+        <a @click="applyStyle('AnimeGANv2_Shinkai')" class="btn-link">
+          <img src="src/components/icons/default_Shinkai.jpg" alt="Shinkai Style" class="styled-image" />
+          <button @click="applyStyle('AnimeGANv2_Shinkai')" class="btn mx-2 shinkai-style-btn">
+            Shinkai Style
+          </button>
+        </a>
+      </div>
+
+      <div class="style-button-container">
+        <a @click="applyStyle('face')" class="btn-link">
+          <img src="src/components/icons/default_face.jpg" alt="Paprika Style" class="styled-image" />
+          <button @click="applyStyle('face')" class="btn mx-2 face-style-btn">
+            face Style
+          </button>
+        </a>
+      </div>
+
+      <div class="style-button-container">
+        <a @click="applyStyle('PortraitSketch')" class="btn-link">
+          <img src="src/components/icons/default_face.jpg" alt="Hayao Style" class="styled-image" />
+          <button @click="applyStyle('PortraitSketch')" class="btn mx-2 protrait-style-btn">
+            PortraitSketch Style
+          </button>
+        </a>
+      </div>
+
+      <div class="style-button-container">
+        <a @click="applyStyle('AnimeGANv2_Paprika')" class="btn-link">
+          <img src="src/components/icons/default_Paprika.jpg" alt="Shinkai Style" class="styled-image" />
+          <button @click="applyStyle('AnimeGANv2_Paprika')" class="btn mx-2 default-style-btn">
+            Default Paprika Style
+          </button>
+        </a>
+      </div>
     </div>
 
     <!-- 图片展示区域 -->
+    <!-- <div v-if="imageUrl" class="image-preview text-center">
+      <img :src="imageUrl" alt="Preview" class="img-fluid rounded" />
+    </div> -->
     <div class="image-preview text-center">
       <div v-if="imageUrl" class="d-inline-block">
         <img :src="imageUrl" alt="Original" class="img-fluid rounded" />
@@ -74,11 +125,11 @@ export default {
       formData.append('image', this.selectedFile);
 
       // Alert the content of the FormData
-      var formDataString = "";
-      for (var pair of formData.entries()) {
-        formDataString += pair[0] + ": " + pair[1] + "\n";
-      }
-      alert(formDataString);
+      // var formDataString = "";
+      // for (var pair of formData.entries()) {
+      //   formDataString += pair[0] + ": " + pair[1] + "\n";
+      // }
+      // alert(formDataString);
 
       axios.post('http://localhost:8282/Anyani/upload_image', formData, {
         headers: {
@@ -92,8 +143,9 @@ export default {
 
           // 构造一个URL来访问该文件
           this.processedImageUrl = `http://localhost:8282/content/outputs/${filename}`;
+          // alert(this.processedImageUrl);
           console.log(this.processedImageUrl);
-          console.log(filename)
+          console.log(filename);
         })
         .catch(error => {
           console.error('Error applying style:', error);
@@ -135,6 +187,54 @@ export default {
   /* 让动画播放五次 */
   transform-origin: center bottom;
   /* 设置旋转点为文本的底部中心 */
+}
+
+.styles {
+  display: flex;
+  /* Use flexbox to create a horizontal layout */
+  flex-wrap: wrap;
+  justify-content: center;
+  /* Distribute items evenly along the row */
+}
+
+.style-button-container {
+  flex: 0 0 calc(33.33% - 10px);
+  /* 33.33% to fit 3 items in a row with 10px spacing */
+  text-align: center;
+  margin: 5px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.style-button-container img {
+  border-radius: 10px;
+  /* Adjust the border radius as needed */
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 2px;
+}
+
+.style-button-container button {
+  margin-top: 10px;
+  /* Add 2px margin between the button and the image */
+}
+
+.styled-image {
+  border-radius: 10px;
+  /* Adjust the border radius as needed */
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 2px;
+  /* Add 2px margin between the image and the button */
+  transition: opacity 0.3s ease;
+  /* Add a hover effect */
+}
+
+.styled-image:hover {
+  opacity: 0.9;
+  /* Adjust the opacity for the hover effect */
+  cursor: pointer;
 }
 </style>
 
@@ -204,6 +304,24 @@ export default {
   /* Shinkai Style 按钮的背景颜色 */
   color: white;
   /* 文字颜色 */
+}
+
+.face-style-btn {
+  background-color: rgb(116, 21, 194);
+  /* Shinkai Style 按钮的背景颜色 */
+  color: white;
+  /* 文字颜色 */
+}
+.protrait-style-btn{
+  background-color: rgb(255, 196, 4);
+  /* Shinkai Style 按钮的背景颜色 */
+  color: white;
+}
+
+.default-style-btn{
+  background-color: rgba(93, 89, 95, 0.868);
+  /* Shinkai Style 按钮的背景颜色 */
+  color: white;
 }
 
 /* 你也可以为按钮添加悬停效果 */
