@@ -55,7 +55,7 @@
 
       <div class="style-button-container">
         <a @click="applyStyle('PortraitSketch')" class="btn-link">
-          <img src="src/components/icons/default_face.jpg" alt="Hayao Style" class="styled-image" />
+          <img src="src/components/icons/default_PortraitSketch.jpg" alt="Hayao Style" class="styled-image" />
           <button @click="applyStyle('PortraitSketch')" class="btn mx-2 protrait-style-btn">
             PortraitSketch Style
           </button>
