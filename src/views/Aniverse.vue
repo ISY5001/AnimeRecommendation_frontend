@@ -80,7 +80,7 @@ export default {
       }
       alert(formDataString);
 
-      axios.post('http://localhost:8282/Anyani/upload_image', formData, {
+      axios.post('http://localhost:8282/Anyani/upload_image_aniverse', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

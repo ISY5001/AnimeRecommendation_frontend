@@ -15,14 +15,14 @@
           </router-link>
         </li>
         <li>
-          <router-link to="/aniprofile" class="flex text-green-600 items-center cursor-pointer">
-            <AIcon />
+          <router-link to="/aniprofile" class="flex text-purple-600 items-center cursor-pointer">
+            <TimeIcon />
             <span class="text-lg tracking-wide md:text-xl">AniProfile</span>
           </router-link>
         </li>
         <li>
           <router-link to="/fav" class="flex text-red-600 items-center cursor-pointer">
-            <HeartIcon />
+            <StarIcon />
             <span class="text-lg tracking-wide md:text-xl">Scored Animes</span>
           </router-link>
         </li>
@@ -91,6 +91,7 @@ import ChatBotIcon from "./icons/ChatBotIcon.vue";
 import HeartIcon from "./icons/HeartIcon.vue";
 import StarIcon from "./icons/StarIcon.vue";
 import AIcon from "./icons/AIcon.vue";
+import TimeIcon from "./icons/TimeIcon.vue";
 import { ref, reactive, computed } from 'vue';
 import axios from "axios";
 import { onMounted } from 'vue';
@@ -133,9 +134,9 @@ const userNames = computed(() => {
   const isLoggedIn = sessionStorage.getItem("isLoggedIn");
   const user_names = sessionStorage.getItem("username");
   if (isLoggedIn === 'true') { // 使用字符串比较
-    return user_names;
+    return "  " + user_names;
   }
-  return 'User';
+  return '  User';
 });
 
 // Add this to your <script setup>
