@@ -63,10 +63,10 @@
       </div>
 
       <div class="style-button-container">
-        <a @click="applyStyle('AnimeGANv2_Paprika')" class="btn-link">
-          <img src="src/components/icons/default_Paprika.jpg" alt="Shinkai Style" class="styled-image" />
-          <button @click="applyStyle('AnimeGANv2_Paprika')" class="btn mx-2 default-style-btn">
-            Default Paprika Style
+        <a @click="applyStyle('oilpainting')" class="btn-link">
+          <img src="src/components/icons/default_oilpainting.jpg" alt="Shinkai Style" class="styled-image" />
+          <button @click="applyStyle('oilpainting')" class="btn mx-2 default-style-btn">
+            Oil Painting Style
           </button>
         </a>
       </div>
