@@ -12,7 +12,21 @@
       </label>
     </div>
 
+    <!-- 图片展示区域 -->
+    <!-- <div v-if="imageUrl" class="image-preview text-center">
+      <img :src="imageUrl" alt="Preview" class="img-fluid rounded" />
+    </div> -->
+    <div class="image-preview text-center">
+      <div v-if="imageUrl" class="d-inline-block">
+        <img :src="imageUrl" alt="Original" class="img-fluid rounded" />
+        <div>Original</div>
+      </div>
 
+      <div v-if="processedImageUrl" class="d-inline-block">
+        <img :src="processedImageUrl" alt="Styled" class="img-fluid rounded" />
+        <div>Styled</div>
+      </div>
+    </div>
 
     <!-- 样式选择按钮 -->
     <div class="styles mb-5 text-center">
@@ -55,7 +69,7 @@
 
       <div class="style-button-container">
         <a @click="applyStyle('PortraitSketch')" class="btn-link">
-          <img src="src/components/icons/default_face.jpg" alt="Hayao Style" class="styled-image" />
+          <img src="src/components/icons/default_PortraitSketch.jpg" alt="Hayao Style" class="styled-image" />
           <button @click="applyStyle('PortraitSketch')" class="btn mx-2 protrait-style-btn">
             PortraitSketch Style
           </button>
@@ -72,21 +86,7 @@
       </div>
     </div>
 
-    <!-- 图片展示区域 -->
-    <!-- <div v-if="imageUrl" class="image-preview text-center">
-      <img :src="imageUrl" alt="Preview" class="img-fluid rounded" />
-    </div> -->
-    <div class="image-preview text-center">
-      <div v-if="imageUrl" class="d-inline-block">
-        <img :src="imageUrl" alt="Original" class="img-fluid rounded" />
-        <div>Original</div>
-      </div>
 
-      <div v-if="processedImageUrl" class="d-inline-block">
-        <img :src="processedImageUrl" alt="Styled" class="img-fluid rounded" />
-        <div>Styled</div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -312,13 +312,14 @@ export default {
   color: white;
   /* 文字颜色 */
 }
-.protrait-style-btn{
+
+.protrait-style-btn {
   background-color: rgb(255, 196, 4);
   /* Shinkai Style 按钮的背景颜色 */
   color: white;
 }
 
-.default-style-btn{
+.default-style-btn {
   background-color: rgba(93, 89, 95, 0.868);
   /* Shinkai Style 按钮的背景颜色 */
   color: white;
